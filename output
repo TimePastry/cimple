@@ -1,0 +1,3 @@
+bison -d cimple.y
+flex cimple.l
+g++ cimple.tab.c lex.yy.c ASTNodeDefines.cpp main.cpp PrettyPrintVisitor.cpp -o exec

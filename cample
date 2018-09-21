@@ -1,0 +1,54 @@
+global int foo;
+global char bar;
+global string strang;
+global int garbley;
+
+int loop(int i)
+{
+	while(i)
+	{
+		i = i - 1;
+	}
+	return 0;
+}
+
+string test(int arg1, char arg2, string arg3)
+{
+	foo = -5;
+	foo = 4 + 5;
+	if (strang)
+	{
+		lyrics();
+	}
+	return "3";
+}
+
+string lyrics()
+{
+	string def;
+	int faker;
+	def = "somebody once told me";
+	lyrics(first, second);
+    return "hello there";
+}
+
+string rightname()
+{
+	return "wrongname";
+}
+
+int main()
+{
+    string lyric;
+    lyric = lyrics();
+    printf(lyric);
+    if (4)
+    {
+        lyric = "nothing";
+        garbley = 4 + 5;
+    } else {
+        lyric = "country road";
+        garbley = 4 * 5;
+    }
+    return 4;
+}

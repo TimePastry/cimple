@@ -39,6 +39,23 @@ string opToString(operators o)
     }
 }
 
+vtypes stringToVtypes(string s, bool isFunc)
+{
+    if (isFunc)
+    {
+        if (s == "int") return INTV;
+        if (s == "char") return CHARV;
+        if (s == "string") return STRINGV;
+    }
+    else
+    {
+        if (s == "int") return INTF;
+        if (s == "char") return CHARF;
+        if (s == "string") return STRINGF;
+    }
+    throw "Unknown type string: " + s;
+}
+
 void ListNode::append(ASTNode* last)
 {
     next ? ((ListNode*)next)->append(last) : setNext(last);

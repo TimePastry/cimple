@@ -34,6 +34,7 @@ string lyrics()
 
 string rightname()
 {
+	garbley = cheese;
 	return "wrongname";
 }
 

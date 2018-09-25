@@ -4,12 +4,13 @@
 #include <vector>
 using namespace std;
 
-enum vtypes { INTV, STRINGV, CHARV, IDV };
+enum vtypes { INTV, STRINGV, CHARV, IDV, INTF, STRINGF, CHARF };
 enum operators { Add, Sub, Or, And, Lt, Gt, Lte, Gte, Eq, Neq, Mult, Not };
 
 class Visitor;
 
 string opToString(operators o);
+vtypes stringToVtypes(string s, bool isFunc = false);
 
 class ASTNode
 {
@@ -69,6 +70,7 @@ private:
 public:
     DeclarationNode(string t = "", string label = "") : type(t), id(label) {}
     string getID() { return id; }
+    string getType() { return type; }
     void accept(Visitor* v);
     string toString();
 };
@@ -204,6 +206,8 @@ private:
 public:
     BinopNode(ASTNode* l, ASTNode* r, int opindex) : lhs(l), rhs(r), op(operators(opindex)) {}
     operators getOp() { return op; }
+    ASTNode* getLeft() { return lhs; }
+    ASTNode* getRight() { return rhs; }
     void accept(Visitor* v);
     string toString();
 };
@@ -216,6 +220,7 @@ private:
     operators op;
 public:
     UnopNode(ASTNode* r, int opindex) : rhs(r), op(operators(opindex)) {}
+    ASTNode* getValue() { return rhs; }
     operators getOp() { return op; }
     void accept(Visitor* v);
     string toString();

@@ -2,6 +2,7 @@
 #include "Visitor.h"
 #include <iostream>
 #include "SymbolTableVisitor.h"
+#include "TypeCheckVisitor.h"
 #include <cstring>
 
 using namespace std;
@@ -64,6 +65,23 @@ int main(int argc, char** argv)
             SymbolTableVisitor* stv = new SymbolTableVisitor();
             ((ProgramNode*)head)->accept(stv);
             printSymbolTable(stv->getRootTable());
+            cout << "finished" << endl;
+        }
+        else if (!strcmp(argv[i], "-tc"))
+        {
+            cout << "running SymbolTableVisitor, then TypeCheckVisitor..." << endl;
+            SymbolTableVisitor* stv = new SymbolTableVisitor();
+            ((ProgramNode*)head)->accept(stv);
+            try{
+                TypeCheckVisitor* tcv = new TypeCheckVisitor(stv->getRootTable());
+                ((ProgramNode*)head)->accept(tcv);
+            } catch (string s)
+            {
+                cout << "caught exception:" << endl;
+                cout << s << endl;
+                cout << "exiting" << endl;
+                exit(-1);
+            }
             cout << "finished" << endl;
         }
     }

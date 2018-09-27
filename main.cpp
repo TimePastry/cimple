@@ -9,6 +9,22 @@ using namespace std;
 
 ASTNode* parse(char*);
 
+string getSymbolType(ASTNode* n)
+{
+    if (dynamic_cast<DeclarationNode*>(n))
+    {
+        return ((DeclarationNode*)n)->getType();
+    }
+    if (dynamic_cast<FunctionNode*>(n))
+    {
+        return ((FunctionNode*)n)->getType();
+    }
+    if (dynamic_cast<ArgumentNode*>(n))
+    {
+        return ((ArgumentNode*)n)->getType();
+    }
+}
+
 void printSymbolTable(vector<map<string, ASTNode*> > table)
 {
     for (int i = 0; i < table.size(); i++)
@@ -16,7 +32,7 @@ void printSymbolTable(vector<map<string, ASTNode*> > table)
         cout << "Table " << i << ":\n";
         for(auto j : table.at(i))
         {
-            cout << "\t" << j.first << endl;
+            cout << "\t" << j.first << "\t\t:\t" << getSymbolType(j.second) << endl;
         }
     }
 }
@@ -70,12 +86,21 @@ int main(int argc, char** argv)
         else if (!strcmp(argv[i], "-tc"))
         {
             cout << "running SymbolTableVisitor, then TypeCheckVisitor..." << endl;
+            ListifyVisitor* lv = new ListifyVisitor();
+            ((ProgramNode*)head)->accept(lv);
             SymbolTableVisitor* stv = new SymbolTableVisitor();
             ((ProgramNode*)head)->accept(stv);
             try{
                 TypeCheckVisitor* tcv = new TypeCheckVisitor(stv->getRootTable());
                 ((ProgramNode*)head)->accept(tcv);
             } catch (string s)
+            {
+                cout << "caught exception:" << endl;
+                cout << s << endl;
+                cout << "exiting" << endl;
+                exit(-1);
+            }
+            catch (const char* s)
             {
                 cout << "caught exception:" << endl;
                 cout << s << endl;

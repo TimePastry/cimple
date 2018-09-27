@@ -15,7 +15,7 @@ int loop(int i)
 string test(int arg1, char arg2, string arg3)
 {
 	foo = -5;
-	foo = 4 + 5;
+	foo = 4 + 3;
 	if (strang)
 	{
 		lyrics();
@@ -28,13 +28,12 @@ string lyrics()
 	string def;
 	int faker;
 	def = "somebody once told me";
-	lyrics(first, second);
+	loop(foo);
     return "hello there";
 }
 
 string rightname()
 {
-	garbley = cheese;
 	return "wrongname";
 }
 
@@ -42,7 +41,7 @@ int main()
 {
     string lyric;
     lyric = lyrics();
-    printf(lyric);
+    print(lyric);
     if (4)
     {
         lyric = "nothing";

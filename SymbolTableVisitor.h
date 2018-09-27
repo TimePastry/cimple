@@ -12,8 +12,9 @@ class SymbolTableVisitor : public Visitor
 private:
     vector<map<string, ASTNode*> > root;
     int functionIndex;
+    void fillStdFunctions();
 public:
-    SymbolTableVisitor() { functionIndex = 0; root.push_back(map<string, ASTNode*>()); }
+    SymbolTableVisitor() { functionIndex = 0; root.push_back(map<string, ASTNode*>()); fillStdFunctions(); }
     vector<map<string, ASTNode*> > getRootTable() { return root; }
 
     bool previsit(FunctionNode* n);

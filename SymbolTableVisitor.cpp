@@ -1,4 +1,13 @@
 #include "SymbolTableVisitor.h"
+//ArgumentNode(string t = "", string label = "") : type(t), id(label) {}
+//FunctionNode(string t = "", string label = "", ASTNode* a = NULL, ASTNode* b = NULL) : type(t), id(label), args(a), body(b) {}
+void SymbolTableVisitor::fillStdFunctions()
+{
+    vector<ASTNode*> v;
+    v.push_back(new ArgumentNode("string", "s"));
+    ListifiedNode* printList = new ListifiedNode(v);
+    root.at(0)["print"] = new FunctionNode("int", "print", printList, NULL /*todo*/);
+}
 
 bool SymbolTableVisitor::previsit(FunctionNode* n)
 {

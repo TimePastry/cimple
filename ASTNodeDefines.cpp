@@ -39,9 +39,27 @@ string opToString(operators o)
     }
 }
 
+string vtypesToString(vtypes v)
+{
+    switch(v)
+    {
+    case INTV:
+    case INTF:
+        return "int";
+    case CHARV:
+    case CHARF:
+        return "char";
+    case STRINGV:
+    case STRINGF:
+        return "string";
+    case IDV:
+        return "id";
+    }
+}
+
 vtypes stringToVtypes(string s, bool isFunc)
 {
-    if (isFunc)
+    if (!isFunc)
     {
         if (s == "int") return INTV;
         if (s == "char") return CHARV;
@@ -54,6 +72,26 @@ vtypes stringToVtypes(string s, bool isFunc)
         if (s == "string") return STRINGF;
     }
     throw "Unknown type string: " + s;
+}
+
+int listLength(ASTNode* n)
+{
+    if (dynamic_cast<ListifiedNode*>(n))
+    {
+        return ((ListifiedNode*)n)->getLength();
+    }
+    if (dynamic_cast<ListNode*>(n))
+    {
+        ListNode* temp = (ListNode*)n;
+        int len = 0;
+        while (temp)
+        {
+            len++;
+            temp = (ListNode*)temp->getNext();
+        }
+        return len;
+    }
+    return 1;
 }
 
 void ListNode::append(ASTNode* last)
@@ -138,6 +176,22 @@ void FunctionNode::accept(Visitor* v)
     ListNode::accept(v);
 }
 
+ASTNode* FunctionNode::getArg(int i)
+{
+    if (dynamic_cast<ListifiedNode*>(args))
+    {
+        return ((ListifiedNode*)args)->at(i);
+    }
+    ListNode* temp = (ListNode*)args;
+    while(i)
+    {
+        i--;
+        if (temp->getNext()) temp = (ListNode*)temp->getNext();
+        else throw "Attempted to access out of bounds argument in FunctionNode";
+    }
+    return temp;
+}
+
 string FunctionNode::toString()
 {
     stringstream ss;
@@ -202,6 +256,22 @@ string FunctionCallNode::toString()
     ss << ((values) ? values->toString() : "");
     ss << ");\n";
     return ss.str();
+}
+
+ASTNode* FunctionCallNode::getVal(int i)
+{
+    if (dynamic_cast<ListifiedNode*>(values))
+    {
+        return ((ListifiedNode*)values)->at(i);
+    }
+    ValueListNode* temp = (ValueListNode*)values;
+    while(i)
+    {
+        i--;
+        if (temp->getNext()) temp = (ValueListNode*)temp->getNext();
+        else throw "Attempted to access out of bounds argument in FunctionCallNode";
+    }
+    return temp;
 }
 
 string ValueNode::getType()

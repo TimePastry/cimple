@@ -12,14 +12,15 @@ private:
     int current = 0;
 
     vtypes getType(ASTNode* n);
-
+    vtypes binopReturn(ValueNode* l, ValueNode* r, operators o);
     vtypes getTypeById(string id);
+    ASTNode* getNodeById(string id);
 public:
     TypeCheckVisitor(vector<map<string, ASTNode*> > t) : table(t) {}
     
     bool previsit(FunctionNode*) { current++; return false; }
 
-    virtual void visit(FunctionCallNode* n) {};
+    virtual void visit(FunctionCallNode* n);
     virtual void visit(AssignmentNode* n);
     virtual void visit(WhileNode* n) {};
     virtual void visit(IfNode* n) {};

@@ -10,6 +10,7 @@ enum operators { Add, Sub, Or, And, Lt, Gt, Lte, Gte, Eq, Neq, Mult, Not };
 class Visitor;
 
 string opToString(operators o);
+string vtypesToString(vtypes v);
 vtypes stringToVtypes(string s, bool isFunc = false);
 
 class ASTNode
@@ -38,6 +39,8 @@ private:
 public:
     ListifiedNode(vector<ASTNode*> v) : nodes(v) {}
     void accept(Visitor* v);
+    int getLength() { return nodes.size(); }
+    ASTNode* at(int i) { return nodes.at(i); }
     string toString();
 };
 
@@ -88,6 +91,7 @@ public:
     string getID() { return id; }
     void setArgs(ASTNode* a) { args = a; }
     ASTNode* getArgs() { return args; }
+    ASTNode* getArg(int i);
     void setBody(ASTNode* b) { body = b; }
     ASTNode* getBody() { return body; }
     void accept(Visitor* v);
@@ -130,6 +134,7 @@ public:
     string getID() { return id; }
     void setValues(ASTNode* v) { values = v; }
     ASTNode* getValues() { return values; }
+    ASTNode* getVal(int i);
     void accept(Visitor* v);
     string toString();
 };
@@ -278,3 +283,5 @@ public:
     void accept(Visitor* v);
     string toString();
 };
+
+int listLength(ASTNode* n);

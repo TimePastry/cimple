@@ -148,3 +148,23 @@ void TypeCheckVisitor::visit(FunctionCallNode* n)
     }
 }
 
+void TypeCheckVisitor::visit(WhileNode* n)
+{
+    ValueNode* v = (ValueNode*)n->getCondition();
+    vtypes type = getType(v);
+    if (type != INTV) throw "value of condition for while loop must be int";
+}
+
+void TypeCheckVisitor::visit(IfNode* n)
+{
+    ValueNode* v = (ValueNode*)n->getCondition();
+    vtypes type = getType(v);
+    if (type != INTV) throw "value of condition for if block must be int";
+}
+
+void TypeCheckVisitor::visit(ReturnNode* n)
+{
+    ValueNode* v = (ValueNode*)n->getValue();
+    vtypes type = getType(v);
+    if (type != returnType) throw "return type does not match that of function definition";
+}

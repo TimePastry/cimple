@@ -16,7 +16,7 @@ string test(int arg1, char arg2, string arg3)
 {
 	foo = -5;
 	foo = 4 + 3;
-	if (strang)
+	if (foo)
 	{
 		lyrics();
 	}

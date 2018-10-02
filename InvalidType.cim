@@ -1,0 +1,17 @@
+global int number;
+
+int add(int lhs, int rhs)
+{
+    int result;
+    result = lhs + rhs;
+    return result;
+}
+
+int main()
+{
+    string local;
+    number = 4;
+    local = "16";
+    number = add(number, local);
+    return 0;
+}

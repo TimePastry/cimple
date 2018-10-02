@@ -5,6 +5,11 @@
 
 using namespace std;
 
+/*
+ * Checks type validity when given an AST and a symbol table for it
+ *
+ */
+
 class TypeCheckVisitor : public Visitor
 {
 private:

@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+ * Base class for visitor pattern
+ */
+
 class Visitor
 {
 public:
@@ -66,6 +70,11 @@ public:
     virtual void postvisit(ListifiedNode* n) {};
 };
 
+/*
+ * Identity Visitor for testing visitor pattern
+ * Prints the name of each node as it is encountered
+ */
+
 class IdentityVisitor : public Visitor
 {
 public:
@@ -89,6 +98,11 @@ public:
     void visit(ListifiedNode* n) { cout << "ListifiedNode" << endl; };
 };
 
+/*
+ * Visitor for printing an AST in syntactically accurate format
+ * Only has visit methods for top level nodes, allowing for precise formatting
+ */
+
 class PrettyPrintVisitor : public Visitor
 {
 private:
@@ -105,6 +119,11 @@ public:
 
     void postvisit(ListifiedNode* n);
 };
+
+/*
+ * Helper to the PrettyPrintVisitor
+ * Prints the body of functions and the list of arguments in a function definition 
+ */
 
 class PrettyPrintVisitorHelper : public Visitor
 {
@@ -139,6 +158,10 @@ public:
     void postvisit(ElseNode* n);
     void postvisit(ListifiedNode* n);
 };
+
+/*
+ * Visitor that flattens linked list structures into vectors
+ */
 
 class ListifyVisitor : public Visitor
 {

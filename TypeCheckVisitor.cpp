@@ -1,6 +1,8 @@
 #include "TypeCheckVisitor.h"
 #include "ASTNodeDefines.h"
 
+// this funciton only finds the type on the right hand side of an assignment
+// it is kind of a misnomer
 vtypes TypeCheckVisitor::getType(ASTNode* n)
 {
     if (dynamic_cast<BinopNode*>(n))
@@ -13,6 +15,8 @@ vtypes TypeCheckVisitor::getType(ASTNode* n)
     }
     else if (dynamic_cast<UnopNode*>(n))
     {
+        // both unops are only defined for ints
+        // -i and !i
         UnopNode* unop = (UnopNode*)n;
         if (getType((ValueNode*)(unop->getValue())) == INTV)
         {
@@ -32,8 +36,15 @@ vtypes TypeCheckVisitor::getType(ASTNode* n)
     }
     else if (dynamic_cast<FunctionCallNode*>(n))
     {
+        // temporarily assuming that the function's arguments are valid, and that the
+        // function will return the type as given in its definition
+        // this is because the visitor pattern is going to visit the function next to check that,
+        // and to check it here would be redundant
         FunctionCallNode* func = (FunctionCallNode*)n;
         vtypes vtype = getTypeById(func->getID());
+
+        // there are seperate types for functions and values, so here we convert from
+        // function type to value type
         switch(vtype)
         {
         case INTF:
@@ -61,6 +72,9 @@ vtypes TypeCheckVisitor::binopReturn(ValueNode* l, ValueNode* r, operators o)
     switch(o)
     {
     case Add:
+        // two ints sum to another int
+        // adding two other things will create a string by concatenating them together in a string
+        // i.e. 'a' + 4 == "a4"
         if (lv == INTV && rv == INTV) return INTV;
         return STRINGV;
     case Sub:
@@ -73,6 +87,8 @@ vtypes TypeCheckVisitor::binopReturn(ValueNode* l, ValueNode* r, operators o)
     case Gte:
     case Eq:
     case Neq:
+        // all other binops are only defined for ints
+        // I could make subtraction work for strings, but I decided that was too complex for little gain
         if (lv == INTV && rv == INTV) return INTV;
         throw "Expected two integer values for operator: " + opToString(o);
     default:
@@ -130,6 +146,7 @@ void TypeCheckVisitor::visit(AssignmentNode* n)
     }
 }
 
+// this is where the arguments for a function call are compared with the function signature
 void TypeCheckVisitor::visit(FunctionCallNode* n)
 {
     FunctionNode* func = (FunctionNode*)getNodeById(n->getID());
@@ -148,6 +165,7 @@ void TypeCheckVisitor::visit(FunctionCallNode* n)
     }
 }
 
+// conditionals must be ints, 0 == false else true
 void TypeCheckVisitor::visit(WhileNode* n)
 {
     ValueNode* v = (ValueNode*)n->getCondition();
@@ -162,6 +180,7 @@ void TypeCheckVisitor::visit(IfNode* n)
     if (type != INTV) throw "value of condition for if block must be int";
 }
 
+// returns are only valid if they return the type for the current function
 void TypeCheckVisitor::visit(ReturnNode* n)
 {
     ValueNode* v = (ValueNode*)n->getValue();

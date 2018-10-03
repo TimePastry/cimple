@@ -20,6 +20,10 @@ vtypes TypeCheckVisitor::getType(ASTNode* n)
         UnopNode* unop = (UnopNode*)n;
         if (getType((ValueNode*)(unop->getValue())) == INTV)
         {
+            if (verbose)
+            {
+                cout << unop->getValue()->toString() << " = int, ";
+            }
             return INTV;
         }
         else throw "Expected an INTV in a unary operator";
@@ -75,7 +79,18 @@ vtypes TypeCheckVisitor::binopReturn(ValueNode* l, ValueNode* r, operators o)
         // two ints sum to another int
         // adding two other things will create a string by concatenating them together in a string
         // i.e. 'a' + 4 == "a4"
-        if (lv == INTV && rv == INTV) return INTV;
+        if (lv == INTV && rv == INTV)
+        {
+            if (verbose)
+            {
+                cout << l->getValue() << " = int & " << r->getValue() << " = int, ";
+            }
+            return INTV;
+        }
+        if (verbose)
+        {
+            cout << l->getValue() << " = " << vtypesToString(lv) << " & " << r->getValue() << " = " << vtypesToString(rv) << ", ";
+        }
         return STRINGV;
     case Sub:
     case And:
@@ -144,6 +159,12 @@ void TypeCheckVisitor::visit(AssignmentNode* n)
     {
         throw "attempted to assign " + vtypesToString(rhs) + " to a " + vtypesToString(lhs);     
     }
+    if (verbose)
+    {
+        cout << "Type(" << n->getTerm()->toString() << ") = Type(" << n->getID() << ")" << endl;
+        cout << "_____________________________________________________" << endl;
+        cout << '\t' << n->toString() << " is type safe" << endl << endl;
+    }
 }
 
 // this is where the arguments for a function call are compared with the function signature
@@ -162,6 +183,16 @@ void TypeCheckVisitor::visit(FunctionCallNode* n)
         ValueListNode* actual = (ValueListNode*)n->getVal(i);
         vtypes actualType = getType(actual);
         if (expectedType != actualType) throw "type mismatch in function call to: " + n->getID();
+        if (verbose)
+        {
+            cout << "Type(" << actual->toString() << ") = " << expected->getType();
+            if (i + 1 != numArgs) cout << ", ";
+        }
+    }
+    if (verbose)
+    {
+        cout << endl << "_____________________________________________________" << endl;
+        cout << '\t' << n->toString() << " is type safe" << endl << endl;
     }
 }
 
@@ -171,6 +202,12 @@ void TypeCheckVisitor::visit(WhileNode* n)
     ValueNode* v = (ValueNode*)n->getCondition();
     vtypes type = getType(v);
     if (type != INTV) throw "value of condition for while loop must be int";
+    if (verbose)
+    {
+        cout << '\t' << v->toString() << " = int" << endl;
+        cout << "_____________________________________________________" << endl;
+        cout << '\t' << "Conditional is type safe" << endl << endl;
+    }
 }
 
 void TypeCheckVisitor::visit(IfNode* n)
@@ -178,6 +215,12 @@ void TypeCheckVisitor::visit(IfNode* n)
     ValueNode* v = (ValueNode*)n->getCondition();
     vtypes type = getType(v);
     if (type != INTV) throw "value of condition for if block must be int";
+    if (verbose)
+    {
+        cout << '\t' << v->toString() << " = int" << endl;
+        cout << "_____________________________________________________" << endl;
+        cout << '\t' << "Conditional is type safe" << endl << endl;
+    }
 }
 
 // returns are only valid if they return the type for the current function
@@ -186,4 +229,10 @@ void TypeCheckVisitor::visit(ReturnNode* n)
     ValueNode* v = (ValueNode*)n->getValue();
     vtypes type = getType(v);
     if (type != returnType) throw "return type does not match that of function definition";
+    if (verbose)
+    {
+        cout << '\t' << v->toString() << " = " << vtypesToString(type) << endl;
+        cout << "_____________________________________________________" << endl;
+        cout << '\t' << "Return is type safe" << endl << endl;
+    }
 }

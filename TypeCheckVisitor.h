@@ -15,6 +15,7 @@ class TypeCheckVisitor : public Visitor
 private:
     vector<map<string, ASTNode*> > table;
     int current = 0;
+    bool verbose;
     vtypes returnType;
 
     vtypes getType(ASTNode* n);
@@ -22,7 +23,7 @@ private:
     vtypes getTypeById(string id);
     ASTNode* getNodeById(string id);
 public:
-    TypeCheckVisitor(vector<map<string, ASTNode*> > t) : table(t) {}
+    TypeCheckVisitor(vector<map<string, ASTNode*> > t, bool v = false) : table(t), verbose(v) {}
     
     bool previsit(FunctionNode* n) { current++; returnType = stringToVtypes(n->getType());  return false; }
 

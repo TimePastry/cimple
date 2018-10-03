@@ -7,13 +7,14 @@ to run exec, supply it with the following:
 1) a "cimple" code file to be read
 2) a list of tags indicating which visitors you want to run after parsing
 
-Currently supported visitor tags are:
+Currently supported tags are:
 -id                 The identity visitor, which prints the class name of each node in the AST as it is visited
 -pp                 The Pretty Print visitor, which prints the AST in the same format as acceptable code
 -list               The Listify visitor, which flattens the AST so that lists of nodes are contained in a single list node
 -st                 The Symbol Table visitor, which generates and prints a symbol table
 -tc                 The Type Check visitor, which verifies the types are correct
                         This is effectively -list -st -tc, as it will flatten the AST and generate a symbol table before performing the type check
+-v                  When used immediately after -tc, this tag will print out a verbose report of the type check
 
 There is a file named "cample" that can be used to test the execution of "exec".
 All files included for testing purposes have the extension ".cim"

@@ -254,7 +254,7 @@ string FunctionCallNode::toString()
     stringstream ss;
     ss << id << "(";
     ss << ((values) ? values->toString() : "");
-    ss << ");\n";
+    ss << ")";
     return ss.str();
 }
 

@@ -85,13 +85,21 @@ int main(int argc, char** argv)
         }
         else if (!strcmp(argv[i], "-tc"))
         {
+            TypeCheckVisitor* tcv;
+            
             cout << "running SymbolTableVisitor, then TypeCheckVisitor..." << endl;
             ListifyVisitor* lv = new ListifyVisitor();
             ((ProgramNode*)head)->accept(lv);
             SymbolTableVisitor* stv = new SymbolTableVisitor();
             ((ProgramNode*)head)->accept(stv);
+            if (i + 1 < argc && !strcmp(argv[i + 1], "-v"))
+            {
+                tcv = new TypeCheckVisitor(stv->getRootTable(), true);
+            } else 
+            {
+                tcv = new TypeCheckVisitor(stv->getRootTable(), false);
+            }
             try{
-                TypeCheckVisitor* tcv = new TypeCheckVisitor(stv->getRootTable());
                 ((ProgramNode*)head)->accept(tcv);
             } catch (string s)
             {

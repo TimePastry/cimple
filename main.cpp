@@ -46,9 +46,7 @@ int main(int argc, char** argv)
         exit(-1);
     }
 
-    cout << "starting parsing..." << endl;
     ASTNode* head = parse(argv[1]);
-    cout << "finished" << endl;
 
     for (int i = 2; i < argc; i++)
     {

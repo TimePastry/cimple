@@ -15,14 +15,20 @@ Currently supported tags are:
 -tc                 The Type Check visitor, which verifies the types are correct
                         This is effectively -list -st -tc, as it will flatten the AST and generate a symbol table before performing the type check
 -v                  When used immediately after -tc, this tag will print out a verbose report of the type check
+-cesk               Performs -tc, and then interprets the file given
 
 There is a file named "cample" that can be used to test the execution of "exec".
 All files included for testing purposes have the extension ".cim"
 
 ValidType.cim, InvalidType.cim, and InvalidType2.cim can all be used to verify the correctness of the Type Checker.
 
+interptest1.cim, interptest2.cim, and interptest3.cim all verify correcness of te interpreter. Further details about what they test can be found in comments for the given files.
+
 Example run:
 
 ./exec cample.cim -list -pp
 
 If you have questions, you can email me at timepastry@gmail.com
+
+- Known Issues - 
+When printing a string in interpretation, the quotes are not stripped off. e.g. printstring("hello") will print "hello" instead of hello.

@@ -55,6 +55,11 @@ vector<ASTNode*> ListifyVisitor::buildList(ListNode* n)
     if (!n) return vector<ASTNode*>();
     vector<ASTNode*> toReturn = buildList((ListNode*)(n->getNext()));
     n->setNext(NULL);
+	if(dynamic_cast<IfNode*>(n))
+	{
+		toReturn.insert(toReturn.begin(), ((IfNode*)n)->getElse());
+		((IfNode*)n)->setElse(NULL);
+	}
     toReturn.insert(toReturn.begin(), n);
     return toReturn;
 }

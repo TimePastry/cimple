@@ -258,6 +258,7 @@ public:
     ASTNode* getCondition() { return condition; }
     void setBody(ASTNode* b) { body = b; }
     ASTNode* getBody() { return body; }
+    void setElse(ASTNode* e) { elseBody = e; }
     ASTNode* getElse() { return elseBody; }
     void accept(Visitor* v);
     string toString();

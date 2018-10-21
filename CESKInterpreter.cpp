@@ -69,15 +69,14 @@ State CESKInterpreter::step()
     }
     else if (dynamic_cast<FunctionCallNode*>(statement))
     {
-		cout << "##starting call" << endl;
         FunctionCallNode* fNode = (FunctionCallNode*)statement;
         
         // Control
         string funid = fNode->getID();
+
 		// standard functions such as print and rand
 		if (standard.find(funid) != standard.end())
 		{
-			cout << "##found a standard function" << endl;
 			if (funid == "print" || funid == "printstring" || funid == "printint" || funid == "printchar")
 			{
 				ValueNode* arg = (ValueNode*)((ListifiedNode*)fNode->getValues())->at(0);
@@ -86,12 +85,10 @@ State CESKInterpreter::step()
 			}
 			return State(c.next(), newEnvironment, newKont);
 		}
-		cout << "##not a standard function" << endl;
         FunctionNode* func = (FunctionNode*)getFunction(funid);
-        newControl = Control((ListifiedNode*)func->getBody());
+        newControl = Control((ListifiedNode*)((FunctionBodyNode*)func->getBody())->getStatements());
 
         // Environment
-		cout << "##starting env" << endl;
         newEnvironment = map<string, int>();
         ListifiedNode* formals = (ListifiedNode*)func->getArgs();
         ListifiedNode* actuals = (ListifiedNode*)fNode->getValues();
@@ -105,14 +102,12 @@ State CESKInterpreter::step()
         }
 
         // Kontinuation
-		cout << "##start kont" << endl;
         Control returnControl = c.next();
         map<string, int> returnEnvironment = current.getEnvironment();
         int returnK = current.getKontinuation();
         Continuation* kont = new Continuation(returnControl, returnEnvironment, returnK, 0);
         store[nextK] = new StoreEntry(kont);
         newKont = nextK--;
-		cout << "##done with call" << endl;
     }
     else if (dynamic_cast<AssignmentNode*>(statement))
     {
@@ -137,7 +132,7 @@ State CESKInterpreter::step()
 				return State(c.next(), newEnvironment, newKont);
 			}
 			FunctionNode* func = (FunctionNode*)getFunction(funid);
-			newControl = Control((ListifiedNode*)func->getBody());
+			newControl = Control((ListifiedNode*)((FunctionBodyNode*)func->getBody())->getStatements());
 
 			// Environment
 			newEnvironment = map<string, int>();
@@ -166,19 +161,6 @@ State CESKInterpreter::step()
 			BinopNode* bNode = (BinopNode*)aNode->getTerm();
 			ValueNode* vNode = performBinop(bNode);
 			writeValue(aNode->getID(), vNode, current.getEnvironment());
-			/*
-			int storeaddr;
-			if (current.getEnvironment().find(aNode->getID()) != current.getEnvironment().end())
-			{
-				storeaddr = newEnvironment[aNode->getID()];
-			}
-			else
-			{
-				// we can assume that the variable being written to is defined, as the type checking handles that already
-				storeaddr = globalEnv[aNode->getID()];
-			}
-			store[storeaddr] = new StoreEntry(vNode);
-			*/
 			newControl = c.next();
 		}
 		else if (dynamic_cast<UnopNode*>(aNode->getTerm()))
@@ -186,18 +168,6 @@ State CESKInterpreter::step()
 			UnopNode* uNode = (UnopNode*)aNode->getTerm();
 			ValueNode* vNode = performUnop(uNode);
 			writeValue(aNode->getID(), vNode, current.getEnvironment());
-			/*
-			int storeaddr;
-			if (current.getEnvironment().find(aNode->getID()) != current.getEnvironment().end())
-			{
-				storeaddr = newEnvironment[aNode->getID()];
-			}
-			else
-			{
-				storeaddr = globalEnv[aNode->getID()];
-			}
-			store[storeaddr] = new StoreEntry(vNode);
-			*/
 			newControl = c.next();
 		}
 		else if (dynamic_cast<ValueNode*>(aNode->getTerm()))
@@ -205,59 +175,36 @@ State CESKInterpreter::step()
 			ValueNode* vNode = (ValueNode*)aNode->getTerm();
 			vNode = dereferenceID(vNode);
 			writeValue(aNode->getID(), vNode, current.getEnvironment());
-			/*
-			int storeaddr;
-			if (current.getEnvironment().find(aNode->getID()) != current.getEnvironment().end())
-			{
-				storeaddr = newEnvironment[aNode->getID()];
-			}
-			else
-			{
-				// we can assume that the variable being written to is defined, as the type checking handles that already
-				storeaddr = globalEnv[aNode->getID()];
-			}
-			store[storeaddr] = new StoreEntry(vNode);
-			*/
 			newControl = c.next();
 		}
     }
     else if (dynamic_cast<WhileNode*>(statement))
     {
         WhileNode* wNode = (WhileNode*)statement;
-        // check condition
         ValueNode* cond = (ValueNode*)(wNode->getCondition());
         int condVal;
         cond = dereferenceID(cond);
-        // we can now assume that cond is a ValueNode (either straight from the AST or through the store)
         condVal = cond->getIntVal();
 
-        if (condVal)
-        {
-            newControl = c.nextWhile((ListifiedNode*)(wNode->getBody()));
-        }
-        else
-        {
-            newControl = c.next();
-        }
+        if (condVal) newControl = c.nextWhile((ListifiedNode*)(wNode->getBody()));
+        else newControl = c.next();
     }
     else if (dynamic_cast<IfNode*>(statement))
     {
         IfNode* iNode = (IfNode*)statement;
-        // check condition
         ValueNode* cond = (ValueNode*)(iNode->getCondition());
         int condVal;
         cond = dereferenceID(cond);
-        // we can now assume that cond is a ValueNode (either straight from the AST or through the store)
         condVal = cond->getIntVal();
 
         if (condVal)
-        {
-            newControl = c.nextIf((ListifiedNode*)(iNode->getBody()));
-        }
+		{
+			newControl = c.nextIf((ListifiedNode*)(iNode->getBody()));
+		}
         else
-        {
-            newControl = c.next();
-        }
+		{
+			newControl = c.next();
+		}
     }
     else if (dynamic_cast<ElseNode*>(statement))
     {

@@ -1,0 +1,20 @@
+// this file tests control statements
+int main()
+{
+	int i;
+	i = 2;
+	while(i)
+	{
+		printint(i);
+		i = i - 1;
+		if (i)
+		{
+			print("if");
+		}
+		else 
+		{
+			print("else");
+		}
+	}
+	return 0;
+}

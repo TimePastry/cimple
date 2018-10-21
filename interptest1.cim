@@ -1,3 +1,4 @@
+// this file tests simple assignments and output
 global int i;
 
 int main()

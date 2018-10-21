@@ -1,3 +1,4 @@
+// this file tests function calls
 global int g;
 
 int increment(int x)
@@ -7,12 +8,6 @@ int increment(int x)
 	return f;
 }
 
-int yell()
-{
-	print("aaaaaaaa");
-	return 0;
-}
-
 int main()
 {
 	int first;
@@ -20,7 +15,6 @@ int main()
 
 	first = 1;
 	second = 2;
-	yell();
 	first = increment(first);
 	second = increment(second);
 	printint(first);

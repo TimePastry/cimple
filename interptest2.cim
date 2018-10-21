@@ -1,0 +1,30 @@
+global int g;
+
+int increment(int x)
+{
+	int f;
+	f = x + 1;
+	return f;
+}
+
+int yell()
+{
+	print("aaaaaaaa");
+	return 0;
+}
+
+int main()
+{
+	int first;
+	int second;
+
+	first = 1;
+	second = 2;
+	yell();
+	first = increment(first);
+	second = increment(second);
+	printint(first);
+	printint(second);
+
+	return 0;
+}

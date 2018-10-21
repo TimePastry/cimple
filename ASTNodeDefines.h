@@ -118,6 +118,8 @@ private:
     ASTNode* statements;
 public:
     FunctionBodyNode(ASTNode* var, ASTNode* state) : variables(var), statements(state) {}
+    void setVariables(ASTNode* v) { variables = v; }
+    ASTNode* getVariables() { return variables; }
     void setStatements(ASTNode* s) { statements = s; }
     ASTNode* getStatements() { return statements; }
     void accept(Visitor* v);

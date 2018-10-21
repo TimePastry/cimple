@@ -32,6 +32,11 @@ public:
         statementIndex = other->statementIndex;
     }
 
+	string toString()
+	{
+		return getStatement()->toString();
+	}
+
     ASTNode* getStatement()
     {
         return statements.top()->at(statementIndex.top());
@@ -69,7 +74,8 @@ public:
         Control next(this);
         
         int index = statementIndex.top() + 1;
-        if (followingElse) index++;
+        ASTNode* nextNode = statements.top()->at(index);
+        if (dynamic_cast<ElseNode*>(nextNode)) index++;
 
         next.statementIndex.pop();
         next.statementIndex.push(index);

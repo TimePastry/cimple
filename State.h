@@ -15,6 +15,7 @@ private:
     // k is a continuation address
     int k;
 public:
+	State() {}
     State(Control cp, map<string, int> ep, int kp) : c(cp), e(ep), k(kp) {}
 
     Control getControl() { return c; }

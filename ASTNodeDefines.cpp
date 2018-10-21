@@ -234,7 +234,8 @@ void FunctionBodyNode::accept(Visitor* v)
 
 string FunctionBodyNode::toString()
 {
-    return "";
+	cout << "FIX THIS LATER" << endl;
+    return statements->toString();
 }
 
 void FunctionCallNode::accept(Visitor* v)

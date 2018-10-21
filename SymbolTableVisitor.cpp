@@ -4,9 +4,28 @@
 void SymbolTableVisitor::fillStdFunctions()
 {
     vector<ASTNode*> v;
+
     v.push_back(new ArgumentNode("string", "s"));
     ListifiedNode* printList = new ListifiedNode(v);
     root.at(0)["print"] = new FunctionNode("int", "print", printList, NULL /*todo*/);
+
+	v.clear();
+
+    v.push_back(new ArgumentNode("string", "s"));
+    printList = new ListifiedNode(v);
+    root.at(0)["printstring"] = new FunctionNode("int", "printstring", printList, NULL /*todo*/);
+
+	v.clear();
+
+    v.push_back(new ArgumentNode("int", "i"));
+    printList = new ListifiedNode(v);
+    root.at(0)["printint"] = new FunctionNode("int", "printint", printList, NULL /*todo*/);
+
+	v.clear();
+
+    v.push_back(new ArgumentNode("char", "s"));
+    printList = new ListifiedNode(v);
+    root.at(0)["printchar"] = new FunctionNode("int", "printchar", printList, NULL /*todo*/);
 }
 
 bool SymbolTableVisitor::previsit(FunctionNode* n)

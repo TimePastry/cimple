@@ -1,0 +1,13 @@
+global int i;
+
+int main()
+{
+	int foo;
+
+	i = 3;
+	foo = 4;
+	foo = 3 + 4;
+	foo = printint(foo);
+	printint(foo);
+	return 0;
+}

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SymbolTableVisitor.h"
 #include "TypeCheckVisitor.h"
+#include "CESKInterpreter.h"
 #include <cstring>
 
 using namespace std;
@@ -115,6 +116,43 @@ int main(int argc, char** argv)
             }
             cout << "finished" << endl;
         }
+		else if (!strcmp(argv[i], "-cesk"))
+		{
+			TypeCheckVisitor* tcv;
+            
+            cout << "Preparing for execution..." << endl;
+            ListifyVisitor* lv = new ListifyVisitor();
+            ((ProgramNode*)head)->accept(lv);
+            SymbolTableVisitor* stv = new SymbolTableVisitor();
+            ((ProgramNode*)head)->accept(stv);
+            if (i + 1 < argc && !strcmp(argv[i + 1], "-v"))
+            {
+                tcv = new TypeCheckVisitor(stv->getRootTable(), true);
+            } else 
+            {
+                tcv = new TypeCheckVisitor(stv->getRootTable(), false);
+            }
+            try{
+                ((ProgramNode*)head)->accept(tcv);
+            } catch (string s)
+            {
+                cout << "caught exception:" << endl;
+                cout << s << endl;
+                cout << "exiting" << endl;
+                exit(-1);
+            }
+            catch (const char* s)
+            {
+                cout << "caught exception:" << endl;
+                cout << s << endl;
+                cout << "exiting" << endl;
+                exit(-1);
+            }
+
+			cout << "Interpreting..." << endl;
+			CESKInterpreter interp = CESKInterpreter(head);
+			interp.interpret();
+		}
     }
 
     cout << "exiting" << endl;

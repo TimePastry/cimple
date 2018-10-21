@@ -19,8 +19,11 @@ void ListifyVisitor::visit(FunctionNode* n)
 
 void ListifyVisitor::visit(FunctionBodyNode* n)
 {
+    vector<ASTNode*> variables = buildList((ListNode*)(n->getVariables()));
+    n->setVariables(NULL);
     vector<ASTNode*> statements = buildList((ListNode*)(n->getStatements()));
-    n->setStatements(new ListifiedNode(statements));
+	variables.insert(variables.end(), statements.begin(), statements.end());
+    n->setStatements(new ListifiedNode(variables));
 }
 
 void ListifyVisitor::visit(FunctionCallNode* n)

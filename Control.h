@@ -53,7 +53,8 @@ public:
         
         if (index == statements.top()->getLength())
         {
-            next.pop();
+			next.statementIndex.pop();
+			next.statements.pop();
         }
 
         return next;
@@ -82,7 +83,8 @@ public:
 
         if (index == statements.top()->getLength())
         {
-            next.pop();
+			next.statementIndex.pop();
+			next.statements.pop();
         }
 
         next.statements.push(block);
@@ -102,7 +104,8 @@ public:
 
         if (index == statements.top()->getLength())
         {
-            next.pop();
+			next.statementIndex.pop();
+			next.statements.pop();
         }
 
         next.statements.push(block);

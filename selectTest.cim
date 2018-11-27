@@ -1,0 +1,7 @@
+int main()
+{
+    int rand;
+    rand = select(1, 5);
+    printint(rand);
+    return 0;
+}

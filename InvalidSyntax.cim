@@ -1,0 +1,8 @@
+global int man;
+
+int main()
+{
+    int foo;
+    foo = 5;
+    retrun 0;
+}

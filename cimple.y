@@ -8,8 +8,10 @@ using namespace std;
 extern int yylex();
 extern int yyparse();
 extern FILE * yyin;
+extern int linenumber;
 
 void yyerror(const char* s);
+int num;
 
 ASTNode* head;
 %}
@@ -68,11 +70,11 @@ ASTNode* head;
 %%
 
 program:
-    globals functions               { head = new ProgramNode($1, $2); }
+       globals functions               { head = new ProgramNode($1, $2); }
     ;
 
 globals:
-    globals declaration
+       globals declaration
                                     {
                                         ASTNode* cur = $1;
                                         if (cur)
@@ -88,11 +90,12 @@ globals:
     ;
 
 declaration:
-    GLOBAL type ID SEMICOLON
+           GLOBAL type ID SEMICOLON
                                     {
                                         string type = $2;
                                         string id = $3;
                                         $$ = new DeclarationNode(type, id);
+                                        $$->setLineNum(linenumber);
                                     }
     ;
 
@@ -103,7 +106,7 @@ type:
     ;
 
 functions:
-    functions fundef
+         functions fundef
                                     {
                                         ASTNode* cur = $1;
                                         if (cur)
@@ -119,11 +122,12 @@ functions:
     ;
 
 fundef:
-    type ID OPAREN args CPAREN OBRACE funbody CBRACE
+      type { num = linenumber; } ID OPAREN args CPAREN OBRACE funbody CBRACE
                                     {
                                         string type = $1;
-                                        string id = $2;
-                                        $$ = new FunctionNode(type, id, $4, $7);
+                                        string id = $3;
+                                        $$ = new FunctionNode(type, id, $5, $8);
+                                        $$->setLineNum(num);
                                     }
     ;
 
@@ -133,7 +137,7 @@ args:
     ;
 
 arglist:
-    argument argprime
+       argument argprime
                                     {
                                         ((ArgumentNode*)$1)->append($2);
                                         $$ = $1;
@@ -141,25 +145,29 @@ arglist:
     ;
 
 argprime:
-    COMMA arglist                   { $$ = $2; }
+        COMMA arglist                   { $$ = $2; }
     | /*epsilon*/                   { $$ = NULL; }
     ;
 
 argument:
-    type ID
+        type ID
                                     {
                                         string type = $1;
                                         string id = $2;
                                         $$ = new ArgumentNode(type, id);
+                                        $$->setLineNum(linenumber);
                                     }
     ;
 
 funbody:
-    vardeclarations statements      { $$ = new FunctionBodyNode($1, $2); }
+       vardeclarations statements      { 
+                                        $$ = new FunctionBodyNode($1, $2);
+                                        $$->setLineNum(num);
+                                    }
     ;
 
 vardeclarations:
-    vardeclarations localdeclaration
+               vardeclarations localdeclaration
                                     {
                                         ASTNode* cur = $1;
                                         if (cur)
@@ -175,15 +183,16 @@ vardeclarations:
     ;
 
 localdeclaration:
-    type ID SEMICOLON
+                type ID SEMICOLON
                                     {
                                         string type = $1;
                                         string id = $2;
                                         $$ = new DeclarationNode(type, id);
+                                        $$->setLineNum(linenumber);
                                     }
 
 statements:
-    statements statement
+          statements statement
                                     {
                                         ASTNode* cur = $1;
                                         if ($1)
@@ -199,7 +208,7 @@ statements:
     ;
 
 statement:
-    functioncall SEMICOLON          { $$ = $1; }
+         functioncall SEMICOLON          { $$ = $1; }
     | assignment SEMICOLON          { $$ = $1; }
     | whileloop                     { $$ = $1; }
     | ifstatement                   { $$ = $1; }
@@ -207,21 +216,22 @@ statement:
     ;
 
 functioncall:
-    ID OPAREN values CPAREN
+            ID OPAREN values CPAREN
                                     {
                                         string id = $1;
                                         ASTNode* vlist = $3;
                                         $$ = new FunctionCallNode(id, vlist);
+                                        $$->setLineNum(linenumber);
                                     }
     ;
 
 values:
-    valuelist                       { $$ = $1; }
+      valuelist                       { $$ = $1; }
     | /**/                          { $$ = NULL; }
     ;
 
 valuelist:
-    valuemember valueprime
+         valuemember valueprime
                                     {
                                         ((ValueListNode*)$1)->append($2);
                                         $$ = $1;
@@ -229,22 +239,35 @@ valuelist:
     ;
 
 valuemember:
-    ID                              { $$ = new ValueListNode("ID", $1); }
-    | CHAR                          { $$ = new ValueListNode($1); }
-    | STRING                        { $$ = new ValueListNode("String", $1); }
-    | INT                           { $$ = new ValueListNode($1); }
+           ID                              { 
+                                        $$ = new ValueListNode("ID", $1);
+                                        $$->setLineNum(linenumber);
+                                    }
+    | CHAR                          { 
+                                        $$ = new ValueListNode($1);
+                                        $$->setLineNum(linenumber); 
+                                    }
+    | STRING                        { 
+$$ = new ValueListNode("String", $1); 
+$$->setLineNum(linenumber);
+}
+    | INT                           { 
+$$ = new ValueListNode($1); 
+$$->setLineNum(linenumber);
+}
     ;
 
 valueprime:
-    COMMA valuelist                 { $$ = $2; }
+          COMMA valuelist                 { $$ = $2; }
     | /**/                          { $$ = NULL; }
     ;
 
 assignment:
-    ID ASSIGNMENT term
+          ID ASSIGNMENT term
                                     {
                                         string id = $1;
                                         $$ = new AssignmentNode(id, $3);
+$$->setLineNum(linenumber);
                                     }
     ;
 
@@ -256,30 +279,60 @@ term:
     ;
 
 valueterm:
-    ID                              { $$ = new ValueTermNode("ID", $1); }
-    | CHAR                          { $$ = new ValueTermNode($1); }
-    | STRING                        { $$ = new ValueTermNode("String", $1); }
-    | INT                           { $$ = new ValueTermNode($1); }
+         ID                              { 
+$$ = new ValueTermNode("ID", $1); 
+$$->setLineNum(linenumber);
+}
+    | CHAR                          { 
+$$ = new ValueTermNode($1); 
+$$->setLineNum(linenumber);
+}
+    | STRING                        { 
+$$ = new ValueTermNode("String", $1); 
+$$->setLineNum(linenumber);
+}
+    | INT                           { 
+$$ = new ValueTermNode($1); 
+$$->setLineNum(linenumber);
+}
     ;
 
 binop:
-    value binoperator value         { $$ = new BinopNode($1, $3, $2); }
-    | literal MULT value            { $$ = new BinopNode($1, $3, 10); }
+     value binoperator value         { 
+$$ = new BinopNode($1, $3, $2); 
+$$->setLineNum(linenumber);
+}
+    | literal MULT value            { 
+$$ = new BinopNode($1, $3, 10); 
+$$->setLineNum(linenumber);
+}
     ;
 
 value:
-    ID                              { $$ = new ValueNode("ID", $1); }
+     ID                              { 
+$$ = new ValueNode("ID", $1); 
+$$->setLineNum(linenumber);
+}
     | literal                       { $$ = $1; }
     ;
 
 literal:
-    CHAR                            { $$ = new ValueNode($1); }
-    | STRING                        { $$ = new ValueNode("String", $1); }
-    | INT                           { $$ = new ValueNode($1); }
+       CHAR                            { 
+$$ = new ValueNode($1); 
+$$->setLineNum(linenumber);
+}
+    | STRING                        { 
+$$ = new ValueNode("String", $1); 
+$$->setLineNum(linenumber);
+}
+    | INT                           { 
+$$ = new ValueNode($1); 
+$$->setLineNum(linenumber);
+}
     ;
 
 binoperator:
-    ADD                             { $$ = 0; }
+           ADD                             { $$ = 0; }
     | SUB                           { $$ = 1; }
     | OR                            { $$ = 2; }
     | AND                           { $$ = 3; }
@@ -292,30 +345,43 @@ binoperator:
     ;
 
 unop:
-    unoperator literal              { $$ = new UnopNode($2, $1); }
+    unoperator literal              { 
+$$ = new UnopNode($2, $1); 
+$$->setLineNum(linenumber);
+}
     ;
 
 unoperator:
-    SUB                             { $$ = 1; }
+          SUB                             { $$ = 1; }
     | NOT                           { $$ = 11; }
     ;
 
 whileloop:
-    WHILE OPAREN value CPAREN OBRACE statements CBRACE
+         WHILE OPAREN value CPAREN OBRACE statements CBRACE
                                     {
                                         $$ = new WhileNode($3, $6);
+$$->setLineNum(linenumber);
                                     }
     ;
 
 ifstatement:
-    IF OPAREN value CPAREN OBRACE statements CBRACE
-                                    { $$ = new IfNode($3, $6); }
+           IF OPAREN value CPAREN OBRACE statements CBRACE
+                                    { 
+$$ = new IfNode($3, $6); 
+$$->setLineNum(linenumber);
+}
     | IF OPAREN value CPAREN OBRACE statements CBRACE ELSE OBRACE statements CBRACE
-                                    { $$ = new IfNode($3, $6, new ElseNode($10)); }
+                                    { 
+$$ = new IfNode($3, $6, new ElseNode($10)); 
+$$->setLineNum(linenumber);
+}
     ;
 
 return:
-    RETURN value SEMICOLON           { $$ = new ReturnNode($2); }
+      RETURN value SEMICOLON           { 
+$$ = new ReturnNode($2); 
+$$->setLineNum(linenumber);
+}
     ;
 
 %%
@@ -332,7 +398,7 @@ ASTNode* parse(char* filename){
     yyin = myfile;
     yyparse();
 
-    if (head)
+if (head)
     {
         cout << head->toString() << endl;
     } else
@@ -340,11 +406,11 @@ ASTNode* parse(char* filename){
         cout << "head was still null" << endl;
     }
 
-    return head;
+return head;
 }
 
 void yyerror(const char* s)
 {
-    cout << "Parse error!" << endl << s << endl;
+    cout << "Parse error on line " << linenumber << endl << s << endl;
     exit(-1);
 }

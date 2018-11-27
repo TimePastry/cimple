@@ -15,8 +15,11 @@ vtypes stringToVtypes(string s, bool isFunc = false);
 
 class ASTNode
 {
-    // stuff for nodes not sure what all I need
+private:
+	int linenum;
 public:
+	void setLineNum(int num) { linenum = num; }
+	int getLineNum() { return linenum; }
     virtual string toString() = 0;
     virtual void accept(Visitor* v) = 0;
 };

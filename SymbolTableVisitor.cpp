@@ -26,6 +26,13 @@ void SymbolTableVisitor::fillStdFunctions()
     v.push_back(new ArgumentNode("char", "s"));
     printList = new ListifiedNode(v);
     root.at(0)["printchar"] = new FunctionNode("int", "printchar", printList, NULL /*todo*/);
+
+    v.clear();
+
+    v.push_back(new ArgumentNode("int", "low"));
+    v.push_back(new ArgumentNode("int", "high"));
+    ListifiedNode* selectList = new ListifiedNode(v);
+    root.at(0)["select"] = new FunctionNode("int", "select", selectList, NULL);
 }
 
 bool SymbolTableVisitor::previsit(FunctionNode* n)

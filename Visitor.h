@@ -79,23 +79,23 @@ class IdentityVisitor : public Visitor
 {
 public:
     void visit(ASTNode* n) { cout << "not implemented" << endl; }
-    void visit(ProgramNode* n) { cout << "ProgramNode" << endl; }
-    void visit(DeclarationNode* n) { cout << "DeclarationNode" << endl; };
-    void visit(FunctionNode* n) { cout << "FunctionNode" << endl; };
-    void visit(ArgumentNode* n) { cout << "ArgumentNode" << endl; };
-    void visit(FunctionBodyNode* n) { cout << "FunctionBodyNode" << endl; };
-    void visit(FunctionCallNode* n) { cout << "FunctionCallNode" << endl; };
-    void visit(ValueNode* n) { cout << "ValueNode" << endl; };
-    void visit(ValueListNode* n) { cout << "ValueListNode" << endl; }
-    void visit(ValueTermNode* n) { cout << "ValueTermNode" << endl; }
-    void visit(AssignmentNode* n) { cout << "AssignmentNode" << endl; };
-    void visit(BinopNode* n) { cout << "BinopNode" << endl; };
-    void visit(UnopNode* n) { cout << "UnopNode" << endl; };
-    void visit(WhileNode* n) { cout << "WhileNode" << endl; };
-    void visit(IfNode* n) { cout << "IfNode" << endl; };
-    void visit(ElseNode* n) { cout << "ElseNode" << endl; };
-    void visit(ReturnNode* n) { cout << "ReturnNode" << endl; };
-    void visit(ListifiedNode* n) { cout << "ListifiedNode" << endl; };
+    void visit(ProgramNode* n) { cout << "ProgramNode " << n->getLineNum() << endl; }
+    void visit(DeclarationNode* n) { cout << "DeclarationNode " << n->getLineNum() << endl; };
+    void visit(FunctionNode* n) { cout << "FunctionNode " << n->getLineNum() << endl; };
+    void visit(ArgumentNode* n) { cout << "ArgumentNode " << n->getLineNum() << endl; };
+    void visit(FunctionBodyNode* n) { cout << "FunctionBodyNode " << n->getLineNum() << endl; };
+    void visit(FunctionCallNode* n) { cout << "FunctionCallNode " << n->getLineNum() << endl; };
+    void visit(ValueNode* n) { cout << "ValueNode " << n->getLineNum() << endl; };
+    void visit(ValueListNode* n) { cout << "ValueListNode " << n->getLineNum() << endl; }
+    void visit(ValueTermNode* n) { cout << "ValueTermNode " << n->getLineNum() << endl; }
+    void visit(AssignmentNode* n) { cout << "AssignmentNode " << n->getLineNum() << endl; };
+    void visit(BinopNode* n) { cout << "BinopNode " << n->getLineNum() << endl; };
+    void visit(UnopNode* n) { cout << "UnopNode " << n->getLineNum() << endl; };
+    void visit(WhileNode* n) { cout << "WhileNode " << n->getLineNum() << endl; };
+    void visit(IfNode* n) { cout << "IfNode " << n->getLineNum() << endl; };
+    void visit(ElseNode* n) { cout << "ElseNode " << n->getLineNum() << endl; };
+    void visit(ReturnNode* n) { cout << "ReturnNode " << n->getLineNum() << endl; };
+    void visit(ListifiedNode* n) { cout << "ListifiedNode " << n->getLineNum() << endl; };
 };
 
 /*

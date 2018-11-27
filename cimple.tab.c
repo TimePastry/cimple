@@ -73,12 +73,14 @@ using namespace std;
 extern int yylex();
 extern int yyparse();
 extern FILE * yyin;
+extern int linenumber;
 
 void yyerror(const char* s);
+int num;
 
 ASTNode* head;
 
-#line 82 "cimple.tab.c" /* yacc.c:339  */
+#line 84 "cimple.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -108,11 +110,11 @@ ASTNode* head;
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 18 "cimple.y" /* yacc.c:355  */
+#line 20 "cimple.y" /* yacc.c:355  */
 
     #include "ASTNodeDefines.h"
 
-#line 116 "cimple.tab.c" /* yacc.c:355  */
+#line 118 "cimple.tab.c" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -158,7 +160,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 23 "cimple.y" /* yacc.c:355  */
+#line 25 "cimple.y" /* yacc.c:355  */
 
     int ival;
     char cval;
@@ -166,7 +168,7 @@ union YYSTYPE
     char* idval;
     ASTNode* nval;
 
-#line 170 "cimple.tab.c" /* yacc.c:355  */
+#line 172 "cimple.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -181,7 +183,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 185 "cimple.tab.c" /* yacc.c:358  */
+#line 187 "cimple.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -423,16 +425,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   98
+#define YYLAST   99
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  34
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  33
+#define YYNNTS  34
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  71
+#define YYNRULES  72
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  112
+#define YYNSTATES  113
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -481,14 +483,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    71,    71,    75,    87,    91,   100,   101,   102,   106,
-     118,   122,   131,   132,   136,   144,   145,   149,   158,   162,
-     174,   178,   186,   198,   202,   203,   204,   205,   206,   210,
-     219,   220,   224,   232,   233,   234,   235,   239,   240,   244,
-     252,   253,   254,   255,   259,   260,   261,   262,   266,   267,
-     271,   272,   276,   277,   278,   282,   283,   284,   285,   286,
-     287,   288,   289,   290,   291,   295,   299,   300,   304,   311,
-     313,   318
+       0,    73,    73,    77,    89,    93,   103,   104,   105,   109,
+     121,   125,   125,   135,   136,   140,   148,   149,   153,   163,
+     170,   182,   186,   195,   207,   211,   212,   213,   214,   215,
+     219,   229,   230,   234,   242,   246,   250,   254,   261,   262,
+     266,   275,   276,   277,   278,   282,   286,   290,   294,   301,
+     305,   312,   316,   320,   324,   328,   335,   336,   337,   338,
+     339,   340,   341,   342,   343,   344,   348,   355,   356,   360,
+     368,   373,   381
 };
 #endif
 
@@ -502,7 +504,7 @@ static const char *const yytname[] =
   "ASSIGNMENT", "MULT", "OR", "ADD", "AND", "LT", "GT", "LTE", "GTE",
   "EQUAL", "NEQUAL", "SUB", "NOT", "WHILE", "IF", "ELSE", "INTTYPE",
   "CHARTYPE", "STRINGTYPE", "RETURN", "GLOBAL", "$accept", "program",
-  "globals", "declaration", "type", "functions", "fundef", "args",
+  "globals", "declaration", "type", "functions", "fundef", "$@1", "args",
   "arglist", "argprime", "argument", "funbody", "vardeclarations",
   "localdeclaration", "statements", "statement", "functioncall", "values",
   "valuelist", "valuemember", "valueprime", "assignment", "term",
@@ -523,12 +525,12 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -91
+#define YYPACT_NINF -92
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-91)))
+  (!!((Yystate) == (-92)))
 
-#define YYTABLE_NINF -48
+#define YYTABLE_NINF -49
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -537,18 +539,18 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -91,    10,   -25,   -91,    42,   -91,    42,   -91,   -91,   -91,
-      12,    22,   -91,     7,    23,   -91,    42,    27,    30,   -91,
-      28,   -91,    32,    42,   -91,   -91,   -91,    53,    42,   -91,
-      72,   -91,    11,    70,     8,    73,    74,    57,   -91,    76,
-      77,   -91,   -91,   -91,   -91,    64,    41,    57,    57,   -91,
-     -91,   -91,   -91,    78,   -91,   -91,   -91,   -91,   -91,   -91,
-     -91,    79,   -91,    67,    80,    82,    83,    15,   -91,   -91,
-     -91,   -91,   -91,   -91,    35,    66,   -91,    71,    84,    85,
-     -91,   -91,    64,   -91,   -91,   -91,   -91,   -91,   -91,   -91,
-     -91,   -91,   -91,   -91,    57,    57,   -91,    81,    86,   -91,
-     -91,   -91,   -91,   -91,    -2,     0,   -91,    58,    87,   -91,
-       9,   -91
+     -92,     5,   -26,   -92,    42,   -92,    42,   -92,   -92,   -92,
+      12,   -92,   -92,     7,    22,   -92,    21,    42,    25,    30,
+     -92,    28,   -92,    32,    42,   -92,   -92,   -92,    53,    42,
+     -92,    72,   -92,    11,    70,     8,    73,    74,    57,   -92,
+      76,    77,   -92,   -92,   -92,   -92,    64,    41,    57,    57,
+     -92,   -92,   -92,   -92,    78,   -92,   -92,   -92,   -92,   -92,
+     -92,   -92,    79,   -92,    67,    80,    82,    83,    15,   -92,
+     -92,   -92,   -92,   -92,   -92,    35,    66,   -92,    71,    84,
+      85,   -92,   -92,    64,   -92,   -92,   -92,   -92,   -92,   -92,
+     -92,   -92,   -92,   -92,   -92,    57,    57,   -92,    81,    86,
+     -92,   -92,   -92,   -92,   -92,    -2,     0,   -92,    58,    87,
+     -92,     9,   -92
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -557,35 +559,35 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        4,     0,    10,     1,     0,     3,     2,     6,     7,     8,
-       0,     0,     9,     0,     0,     5,    13,     0,     0,    12,
-      16,    17,     0,     0,    14,    20,    15,     0,    23,    11,
-       0,    19,    18,     0,     0,     0,     0,     0,    22,     0,
-       0,    26,    27,    28,    21,    31,     0,     0,     0,    54,
-      52,    53,    50,     0,    51,    24,    25,    36,    34,    35,
-      33,     0,    30,    38,    54,    52,    53,    50,    66,    67,
-      40,    39,    41,    42,     0,    51,    43,     0,     0,     0,
-      71,    29,     0,    32,    57,    55,    58,    59,    60,    61,
-      62,    63,    64,    56,     0,     0,    65,     0,     0,    37,
-      48,    49,    23,    23,     0,     0,    68,    69,     0,    23,
-       0,    70
+       0,    11,     9,     0,     0,     5,     0,    14,     0,     0,
+      13,    17,    18,     0,     0,    15,    21,    16,     0,    24,
+      12,     0,    20,    19,     0,     0,     0,     0,     0,    23,
+       0,     0,    27,    28,    29,    22,    32,     0,     0,     0,
+      55,    53,    54,    51,     0,    52,    25,    26,    37,    35,
+      36,    34,     0,    31,    39,    55,    53,    54,    51,    67,
+      68,    41,    40,    42,    43,     0,    52,    44,     0,     0,
+       0,    72,    30,     0,    33,    58,    56,    59,    60,    61,
+      62,    63,    64,    65,    57,     0,     0,    66,     0,     0,
+      38,    49,    50,    24,    24,     0,     0,    69,    70,     0,
+      24,     0,    71
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -91,   -91,   -91,   -91,     1,   -91,   -91,   -91,    69,   -91,
-     -91,   -91,   -91,   -91,   -90,   -91,    49,   -91,    16,   -91,
-     -91,   -91,   -91,   -91,   -91,   -46,   -43,   -91,   -91,   -91,
-     -91,   -91,   -91
+     -92,   -92,   -92,   -92,     4,   -92,   -92,   -92,   -92,    68,
+     -92,   -92,   -92,   -92,   -92,   -91,   -92,    48,   -92,    16,
+     -92,   -92,   -92,   -92,   -92,   -92,   -47,   -44,   -92,   -92,
+     -92,   -92,   -92,   -92
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     2,     5,    17,     6,    12,    18,    19,    24,
-      20,    27,    28,    31,    32,    38,    39,    61,    62,    63,
-      83,    40,    71,    72,    73,    53,    54,    94,    76,    77,
-      41,    42,    43
+      -1,     1,     2,     5,    18,     6,    12,    14,    19,    20,
+      25,    21,    28,    29,    32,    33,    39,    40,    62,    63,
+      64,    84,    41,    72,    73,    74,    54,    55,    95,    77,
+      78,    42,    43,    44
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -593,30 +595,30 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      74,    78,    79,    75,    34,    10,    34,    11,     4,   106,
-       3,   107,   104,   105,    15,    34,    45,    34,    13,   110,
-     111,    46,   -44,    45,    35,    36,    35,    36,    14,    30,
-      37,    16,    37,    21,    96,    35,    36,    35,    36,    22,
-      23,    37,    25,    37,    64,    65,    66,    67,   100,   101,
-      84,    85,    86,    87,    88,    89,    90,    91,    92,    93,
-      49,    50,    51,    52,    29,    68,    69,    57,    58,    59,
-      60,     7,     8,     9,    49,    50,    51,    44,    33,    82,
-      95,    47,    48,    55,    56,    80,   108,   -47,    81,   -45,
-     -46,   102,    26,    97,    98,    70,   103,   109,    99
+      75,    79,    80,    76,    35,     3,    35,     4,    10,   107,
+      11,   108,   105,   106,    15,    35,    46,    35,    13,   111,
+     112,    47,   -45,    46,    36,    37,    36,    37,    16,    17,
+      38,    22,    38,    31,    97,    36,    37,    36,    37,    23,
+      24,    38,    26,    38,    65,    66,    67,    68,   101,   102,
+      85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
+      50,    51,    52,    53,    30,    69,    70,    58,    59,    60,
+      61,     7,     8,     9,    50,    51,    52,    45,    34,    83,
+      96,    48,    49,    56,    57,    81,   109,   -48,    82,   -46,
+     -47,   103,    27,    98,    99,    71,   104,   110,     0,   100
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      46,    47,    48,    46,     6,     4,     6,     6,    33,    11,
-       0,    11,   102,   103,     7,     6,     8,     6,     6,   109,
-      11,    13,     7,     8,    26,    27,    26,    27,     6,    28,
-      32,     8,    32,     6,    77,    26,    27,    26,    27,     9,
-      12,    32,    10,    32,     3,     4,     5,     6,    94,    95,
+      47,    48,    49,    47,     6,     0,     6,    33,     4,    11,
+       6,    11,   103,   104,     7,     6,     8,     6,     6,   110,
+      11,    13,     7,     8,    26,    27,    26,    27,     6,     8,
+      32,     6,    32,    29,    78,    26,    27,    26,    27,     9,
+      12,    32,    10,    32,     3,     4,     5,     6,    95,    96,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
        3,     4,     5,     6,    11,    24,    25,     3,     4,     5,
        6,    29,    30,    31,     3,     4,     5,     7,     6,    12,
       14,     8,     8,     7,     7,     7,    28,     7,     9,     7,
-       7,    10,    23,     9,     9,    46,    10,    10,    82
+       7,    10,    24,     9,     9,    47,    10,    10,    -1,    83
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -624,43 +626,43 @@ static const yytype_uint8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,    35,    36,     0,    33,    37,    39,    29,    30,    31,
-      38,    38,    40,     6,     6,     7,     8,    38,    41,    42,
-      44,     6,     9,    12,    43,    10,    42,    45,    46,    11,
-      38,    47,    48,     6,     6,    26,    27,    32,    49,    50,
-      55,    64,    65,    66,     7,     8,    13,     8,     8,     3,
-       4,     5,     6,    59,    60,     7,     7,     3,     4,     5,
-       6,    51,    52,    53,     3,     4,     5,     6,    24,    25,
-      50,    56,    57,    58,    59,    60,    62,    63,    59,    59,
-       7,     9,    12,    54,    15,    16,    17,    18,    19,    20,
-      21,    22,    23,    24,    61,    14,    60,     9,     9,    52,
-      59,    59,    10,    10,    48,    48,    11,    11,    28,    10,
-      48,    11
+      38,    38,    40,     6,    41,     7,     6,     8,    38,    42,
+      43,    45,     6,     9,    12,    44,    10,    43,    46,    47,
+      11,    38,    48,    49,     6,     6,    26,    27,    32,    50,
+      51,    56,    65,    66,    67,     7,     8,    13,     8,     8,
+       3,     4,     5,     6,    60,    61,     7,     7,     3,     4,
+       5,     6,    52,    53,    54,     3,     4,     5,     6,    24,
+      25,    51,    57,    58,    59,    60,    61,    63,    64,    60,
+      60,     7,     9,    12,    55,    15,    16,    17,    18,    19,
+      20,    21,    22,    23,    24,    62,    14,    61,     9,     9,
+      53,    60,    60,    10,    10,    49,    49,    11,    11,    28,
+      10,    49,    11
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
        0,    34,    35,    36,    36,    37,    38,    38,    38,    39,
-      39,    40,    41,    41,    42,    43,    43,    44,    45,    46,
-      46,    47,    48,    48,    49,    49,    49,    49,    49,    50,
-      51,    51,    52,    53,    53,    53,    53,    54,    54,    55,
-      56,    56,    56,    56,    57,    57,    57,    57,    58,    58,
-      59,    59,    60,    60,    60,    61,    61,    61,    61,    61,
-      61,    61,    61,    61,    61,    62,    63,    63,    64,    65,
-      65,    66
+      39,    41,    40,    42,    42,    43,    44,    44,    45,    46,
+      47,    47,    48,    49,    49,    50,    50,    50,    50,    50,
+      51,    52,    52,    53,    54,    54,    54,    54,    55,    55,
+      56,    57,    57,    57,    57,    58,    58,    58,    58,    59,
+      59,    60,    60,    61,    61,    61,    62,    62,    62,    62,
+      62,    62,    62,    62,    62,    62,    63,    64,    64,    65,
+      66,    66,    67
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     2,     0,     4,     1,     1,     1,     2,
-       0,     8,     1,     0,     2,     2,     0,     2,     2,     2,
-       0,     3,     2,     0,     2,     2,     1,     1,     1,     4,
-       1,     0,     2,     1,     1,     1,     1,     2,     0,     3,
-       1,     1,     1,     1,     1,     1,     1,     1,     3,     3,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     2,     1,     1,     7,     7,
-      11,     3
+       0,     0,     9,     1,     0,     2,     2,     0,     2,     2,
+       2,     0,     3,     2,     0,     2,     2,     1,     1,     1,
+       4,     1,     0,     2,     1,     1,     1,     1,     2,     0,
+       3,     1,     1,     1,     1,     1,     1,     1,     1,     3,
+       3,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     2,     1,     1,     7,
+       7,    11,     3
 };
 
 
@@ -1337,13 +1339,13 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 71 "cimple.y" /* yacc.c:1646  */
+#line 73 "cimple.y" /* yacc.c:1646  */
     { head = new ProgramNode((yyvsp[-1].nval), (yyvsp[0].nval)); }
-#line 1343 "cimple.tab.c" /* yacc.c:1646  */
+#line 1345 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 76 "cimple.y" /* yacc.c:1646  */
+#line 78 "cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1355,45 +1357,46 @@ yyreduce:
                                             (yyval.nval) = (yyvsp[0].nval);
                                         }
                                     }
-#line 1359 "cimple.tab.c" /* yacc.c:1646  */
+#line 1361 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 87 "cimple.y" /* yacc.c:1646  */
+#line 89 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
-#line 1365 "cimple.tab.c" /* yacc.c:1646  */
+#line 1367 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 92 "cimple.y" /* yacc.c:1646  */
+#line 94 "cimple.y" /* yacc.c:1646  */
     {
                                         string type = (yyvsp[-2].sval);
                                         string id = (yyvsp[-1].idval);
                                         (yyval.nval) = new DeclarationNode(type, id);
+                                        (yyval.nval)->setLineNum(linenumber);
                                     }
-#line 1375 "cimple.tab.c" /* yacc.c:1646  */
+#line 1378 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 100 "cimple.y" /* yacc.c:1646  */
+#line 103 "cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"int"; }
-#line 1381 "cimple.tab.c" /* yacc.c:1646  */
+#line 1384 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 101 "cimple.y" /* yacc.c:1646  */
+#line 104 "cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"char"; }
-#line 1387 "cimple.tab.c" /* yacc.c:1646  */
+#line 1390 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 102 "cimple.y" /* yacc.c:1646  */
+#line 105 "cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"string"; }
-#line 1393 "cimple.tab.c" /* yacc.c:1646  */
+#line 1396 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 107 "cimple.y" /* yacc.c:1646  */
+#line 110 "cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1405,76 +1408,87 @@ yyreduce:
                                             (yyval.nval) = (yyvsp[0].nval);
                                         }
                                     }
-#line 1409 "cimple.tab.c" /* yacc.c:1646  */
+#line 1412 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 118 "cimple.y" /* yacc.c:1646  */
+#line 121 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
-#line 1415 "cimple.tab.c" /* yacc.c:1646  */
+#line 1418 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 123 "cimple.y" /* yacc.c:1646  */
-    {
-                                        string type = (yyvsp[-7].sval);
-                                        string id = (yyvsp[-6].idval);
-                                        (yyval.nval) = new FunctionNode(type, id, (yyvsp[-4].nval), (yyvsp[-1].nval));
-                                    }
-#line 1425 "cimple.tab.c" /* yacc.c:1646  */
+#line 125 "cimple.y" /* yacc.c:1646  */
+    { num = linenumber; }
+#line 1424 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 131 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); /*Head of the argument list*/ }
-#line 1431 "cimple.tab.c" /* yacc.c:1646  */
+#line 126 "cimple.y" /* yacc.c:1646  */
+    {
+                                        string type = (yyvsp[-8].sval);
+                                        string id = (yyvsp[-6].idval);
+                                        (yyval.nval) = new FunctionNode(type, id, (yyvsp[-4].nval), (yyvsp[-1].nval));
+                                        (yyval.nval)->setLineNum(num);
+                                    }
+#line 1435 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 132 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; /*There are no arguments*/ }
-#line 1437 "cimple.tab.c" /* yacc.c:1646  */
+#line 135 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); /*Head of the argument list*/ }
+#line 1441 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 137 "cimple.y" /* yacc.c:1646  */
+#line 136 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; /*There are no arguments*/ }
+#line 1447 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 141 "cimple.y" /* yacc.c:1646  */
     {
                                         ((ArgumentNode*)(yyvsp[-1].nval))->append((yyvsp[0].nval));
                                         (yyval.nval) = (yyvsp[-1].nval);
                                     }
-#line 1446 "cimple.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 144 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1452 "cimple.tab.c" /* yacc.c:1646  */
+#line 1456 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 145 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; }
-#line 1458 "cimple.tab.c" /* yacc.c:1646  */
+#line 148 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1462 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 150 "cimple.y" /* yacc.c:1646  */
-    {
-                                        string type = (yyvsp[-1].sval);
-                                        string id = (yyvsp[0].idval);
-                                        (yyval.nval) = new ArgumentNode(type, id);
-                                    }
+#line 149 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; }
 #line 1468 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 158 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new FunctionBodyNode((yyvsp[-1].nval), (yyvsp[0].nval)); }
-#line 1474 "cimple.tab.c" /* yacc.c:1646  */
+#line 154 "cimple.y" /* yacc.c:1646  */
+    {
+                                        string type = (yyvsp[-1].sval);
+                                        string id = (yyvsp[0].idval);
+                                        (yyval.nval) = new ArgumentNode(type, id);
+                                        (yyval.nval)->setLineNum(linenumber);
+                                    }
+#line 1479 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 163 "cimple.y" /* yacc.c:1646  */
+    { 
+                                        (yyval.nval) = new FunctionBodyNode((yyvsp[-1].nval), (yyvsp[0].nval));
+                                        (yyval.nval)->setLineNum(num);
+                                    }
+#line 1488 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 171 "cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1486,27 +1500,28 @@ yyreduce:
                                             (yyval.nval) = (yyvsp[0].nval);
                                         }
                                     }
-#line 1490 "cimple.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 20:
-#line 174 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; }
-#line 1496 "cimple.tab.c" /* yacc.c:1646  */
+#line 1504 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 179 "cimple.y" /* yacc.c:1646  */
-    {
-                                        string type = (yyvsp[-2].sval);
-                                        string id = (yyvsp[-1].idval);
-                                        (yyval.nval) = new DeclarationNode(type, id);
-                                    }
-#line 1506 "cimple.tab.c" /* yacc.c:1646  */
+#line 182 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; }
+#line 1510 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 187 "cimple.y" /* yacc.c:1646  */
+    {
+                                        string type = (yyvsp[-2].sval);
+                                        string id = (yyvsp[-1].idval);
+                                        (yyval.nval) = new DeclarationNode(type, id);
+                                        (yyval.nval)->setLineNum(linenumber);
+                                    }
+#line 1521 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 23:
+#line 196 "cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if ((yyvsp[-1].nval))
@@ -1518,317 +1533,374 @@ yyreduce:
                                             (yyval.nval) = (yyvsp[0].nval);
                                         }
                                     }
-#line 1522 "cimple.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 23:
-#line 198 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; }
-#line 1528 "cimple.tab.c" /* yacc.c:1646  */
+#line 1537 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 202 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[-1].nval); }
-#line 1534 "cimple.tab.c" /* yacc.c:1646  */
+#line 207 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; }
+#line 1543 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 203 "cimple.y" /* yacc.c:1646  */
+#line 211 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[-1].nval); }
-#line 1540 "cimple.tab.c" /* yacc.c:1646  */
+#line 1549 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 204 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1546 "cimple.tab.c" /* yacc.c:1646  */
+#line 212 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[-1].nval); }
+#line 1555 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 205 "cimple.y" /* yacc.c:1646  */
+#line 213 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
-#line 1552 "cimple.tab.c" /* yacc.c:1646  */
+#line 1561 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 206 "cimple.y" /* yacc.c:1646  */
+#line 214 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
-#line 1558 "cimple.tab.c" /* yacc.c:1646  */
+#line 1567 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 211 "cimple.y" /* yacc.c:1646  */
+#line 215 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1573 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 220 "cimple.y" /* yacc.c:1646  */
     {
                                         string id = (yyvsp[-3].idval);
                                         ASTNode* vlist = (yyvsp[-1].nval);
                                         (yyval.nval) = new FunctionCallNode(id, vlist);
+                                        (yyval.nval)->setLineNum(linenumber);
                                     }
-#line 1568 "cimple.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 30:
-#line 219 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1574 "cimple.tab.c" /* yacc.c:1646  */
+#line 1584 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 220 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; }
-#line 1580 "cimple.tab.c" /* yacc.c:1646  */
+#line 229 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1590 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 225 "cimple.y" /* yacc.c:1646  */
+#line 230 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; }
+#line 1596 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 235 "cimple.y" /* yacc.c:1646  */
     {
                                         ((ValueListNode*)(yyvsp[-1].nval))->append((yyvsp[0].nval));
                                         (yyval.nval) = (yyvsp[-1].nval);
                                     }
-#line 1589 "cimple.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 33:
-#line 232 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueListNode("ID", (yyvsp[0].idval)); }
-#line 1595 "cimple.tab.c" /* yacc.c:1646  */
+#line 1605 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 233 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueListNode((yyvsp[0].cval)); }
-#line 1601 "cimple.tab.c" /* yacc.c:1646  */
+#line 242 "cimple.y" /* yacc.c:1646  */
+    { 
+                                        (yyval.nval) = new ValueListNode("ID", (yyvsp[0].idval));
+                                        (yyval.nval)->setLineNum(linenumber);
+                                    }
+#line 1614 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 234 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueListNode("String", (yyvsp[0].sval)); }
-#line 1607 "cimple.tab.c" /* yacc.c:1646  */
+#line 246 "cimple.y" /* yacc.c:1646  */
+    { 
+                                        (yyval.nval) = new ValueListNode((yyvsp[0].cval));
+                                        (yyval.nval)->setLineNum(linenumber); 
+                                    }
+#line 1623 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 235 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueListNode((yyvsp[0].ival)); }
-#line 1613 "cimple.tab.c" /* yacc.c:1646  */
+#line 250 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueListNode("String", (yyvsp[0].sval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1632 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 239 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1619 "cimple.tab.c" /* yacc.c:1646  */
+#line 254 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueListNode((yyvsp[0].ival)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1641 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 240 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = NULL; }
-#line 1625 "cimple.tab.c" /* yacc.c:1646  */
+#line 261 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1647 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 245 "cimple.y" /* yacc.c:1646  */
-    {
-                                        string id = (yyvsp[-2].idval);
-                                        (yyval.nval) = new AssignmentNode(id, (yyvsp[0].nval));
-                                    }
-#line 1634 "cimple.tab.c" /* yacc.c:1646  */
+#line 262 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = NULL; }
+#line 1653 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 252 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1640 "cimple.tab.c" /* yacc.c:1646  */
+#line 267 "cimple.y" /* yacc.c:1646  */
+    {
+                                        string id = (yyvsp[-2].idval);
+                                        (yyval.nval) = new AssignmentNode(id, (yyvsp[0].nval));
+(yyval.nval)->setLineNum(linenumber);
+                                    }
+#line 1663 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 253 "cimple.y" /* yacc.c:1646  */
+#line 275 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
-#line 1646 "cimple.tab.c" /* yacc.c:1646  */
+#line 1669 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 254 "cimple.y" /* yacc.c:1646  */
+#line 276 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
-#line 1652 "cimple.tab.c" /* yacc.c:1646  */
+#line 1675 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 255 "cimple.y" /* yacc.c:1646  */
+#line 277 "cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
-#line 1658 "cimple.tab.c" /* yacc.c:1646  */
+#line 1681 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 259 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueTermNode("ID", (yyvsp[0].idval)); }
-#line 1664 "cimple.tab.c" /* yacc.c:1646  */
+#line 278 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1687 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 260 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueTermNode((yyvsp[0].cval)); }
-#line 1670 "cimple.tab.c" /* yacc.c:1646  */
+#line 282 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueTermNode("ID", (yyvsp[0].idval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1696 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 261 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueTermNode("String", (yyvsp[0].sval)); }
-#line 1676 "cimple.tab.c" /* yacc.c:1646  */
+#line 286 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueTermNode((yyvsp[0].cval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1705 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 262 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueTermNode((yyvsp[0].ival)); }
-#line 1682 "cimple.tab.c" /* yacc.c:1646  */
+#line 290 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueTermNode("String", (yyvsp[0].sval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1714 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 266 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), (yyvsp[-1].ival)); }
-#line 1688 "cimple.tab.c" /* yacc.c:1646  */
+#line 294 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueTermNode((yyvsp[0].ival)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1723 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 267 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), 10); }
-#line 1694 "cimple.tab.c" /* yacc.c:1646  */
+#line 301 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), (yyvsp[-1].ival)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1732 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 271 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueNode("ID", (yyvsp[0].idval)); }
-#line 1700 "cimple.tab.c" /* yacc.c:1646  */
+#line 305 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), 10); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1741 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 272 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = (yyvsp[0].nval); }
-#line 1706 "cimple.tab.c" /* yacc.c:1646  */
+#line 312 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueNode("ID", (yyvsp[0].idval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1750 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 276 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueNode((yyvsp[0].cval)); }
-#line 1712 "cimple.tab.c" /* yacc.c:1646  */
+#line 316 "cimple.y" /* yacc.c:1646  */
+    { (yyval.nval) = (yyvsp[0].nval); }
+#line 1756 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 277 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueNode("String", (yyvsp[0].sval)); }
-#line 1718 "cimple.tab.c" /* yacc.c:1646  */
+#line 320 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueNode((yyvsp[0].cval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1765 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 278 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ValueNode((yyvsp[0].ival)); }
-#line 1724 "cimple.tab.c" /* yacc.c:1646  */
+#line 324 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueNode("String", (yyvsp[0].sval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1774 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 282 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 0; }
-#line 1730 "cimple.tab.c" /* yacc.c:1646  */
+#line 328 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ValueNode((yyvsp[0].ival)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1783 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 283 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 1; }
-#line 1736 "cimple.tab.c" /* yacc.c:1646  */
+#line 335 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 0; }
+#line 1789 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 284 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 2; }
-#line 1742 "cimple.tab.c" /* yacc.c:1646  */
+#line 336 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 1; }
+#line 1795 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 285 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 3; }
-#line 1748 "cimple.tab.c" /* yacc.c:1646  */
+#line 337 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 2; }
+#line 1801 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 286 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 4; }
-#line 1754 "cimple.tab.c" /* yacc.c:1646  */
+#line 338 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 3; }
+#line 1807 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 287 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 5; }
-#line 1760 "cimple.tab.c" /* yacc.c:1646  */
+#line 339 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 4; }
+#line 1813 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 288 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 6; }
-#line 1766 "cimple.tab.c" /* yacc.c:1646  */
+#line 340 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 5; }
+#line 1819 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 289 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 7; }
-#line 1772 "cimple.tab.c" /* yacc.c:1646  */
+#line 341 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 6; }
+#line 1825 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 290 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 8; }
-#line 1778 "cimple.tab.c" /* yacc.c:1646  */
+#line 342 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 7; }
+#line 1831 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 291 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 9; }
-#line 1784 "cimple.tab.c" /* yacc.c:1646  */
+#line 343 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 8; }
+#line 1837 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 295 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new UnopNode((yyvsp[0].nval), (yyvsp[-1].ival)); }
-#line 1790 "cimple.tab.c" /* yacc.c:1646  */
+#line 344 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 9; }
+#line 1843 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 299 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 1; }
-#line 1796 "cimple.tab.c" /* yacc.c:1646  */
+#line 348 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new UnopNode((yyvsp[0].nval), (yyvsp[-1].ival)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1852 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 300 "cimple.y" /* yacc.c:1646  */
-    { (yyval.ival) = 11; }
-#line 1802 "cimple.tab.c" /* yacc.c:1646  */
+#line 355 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 1; }
+#line 1858 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 305 "cimple.y" /* yacc.c:1646  */
-    {
-                                        (yyval.nval) = new WhileNode((yyvsp[-4].nval), (yyvsp[-1].nval));
-                                    }
-#line 1810 "cimple.tab.c" /* yacc.c:1646  */
+#line 356 "cimple.y" /* yacc.c:1646  */
+    { (yyval.ival) = 11; }
+#line 1864 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 312 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new IfNode((yyvsp[-4].nval), (yyvsp[-1].nval)); }
-#line 1816 "cimple.tab.c" /* yacc.c:1646  */
+#line 361 "cimple.y" /* yacc.c:1646  */
+    {
+                                        (yyval.nval) = new WhileNode((yyvsp[-4].nval), (yyvsp[-1].nval));
+(yyval.nval)->setLineNum(linenumber);
+                                    }
+#line 1873 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 314 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new IfNode((yyvsp[-8].nval), (yyvsp[-5].nval), new ElseNode((yyvsp[-1].nval))); }
-#line 1822 "cimple.tab.c" /* yacc.c:1646  */
+#line 369 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new IfNode((yyvsp[-4].nval), (yyvsp[-1].nval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1882 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 318 "cimple.y" /* yacc.c:1646  */
-    { (yyval.nval) = new ReturnNode((yyvsp[-1].nval)); }
-#line 1828 "cimple.tab.c" /* yacc.c:1646  */
+#line 374 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new IfNode((yyvsp[-8].nval), (yyvsp[-5].nval), new ElseNode((yyvsp[-1].nval))); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1891 "cimple.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 72:
+#line 381 "cimple.y" /* yacc.c:1646  */
+    { 
+(yyval.nval) = new ReturnNode((yyvsp[-1].nval)); 
+(yyval.nval)->setLineNum(linenumber);
+}
+#line 1900 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1832 "cimple.tab.c" /* yacc.c:1646  */
+#line 1904 "cimple.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2056,7 +2128,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 321 "cimple.y" /* yacc.c:1906  */
+#line 387 "cimple.y" /* yacc.c:1906  */
 
 
 ASTNode* parse(char* filename){
@@ -2071,7 +2143,7 @@ ASTNode* parse(char* filename){
     yyin = myfile;
     yyparse();
 
-    if (head)
+if (head)
     {
         cout << head->toString() << endl;
     } else
@@ -2079,11 +2151,11 @@ ASTNode* parse(char* filename){
         cout << "head was still null" << endl;
     }
 
-    return head;
+return head;
 }
 
 void yyerror(const char* s)
 {
-    cout << "Parse error!" << endl << s << endl;
+    cout << "Parse error on line " << linenumber << endl << s << endl;
     exit(-1);
 }

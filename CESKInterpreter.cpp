@@ -82,9 +82,6 @@ State CESKInterpreter::stepDeclaration(DeclarationNode* dNode, Control c, map<st
 
 	int allocAddress = nextVar++;
 	s[allocAddress];
-	// TODO REMOVE
-	//store[allocAddress];
-	// END TODO
 	e[dNode->getID()] = allocAddress;
 
 	return State(c, e, s, k);
@@ -115,11 +112,6 @@ State CESKInterpreter::stepFunctionCall(FunctionCallNode* fNode, Control c, map<
 		ValueNode* val = (ValueNode*)actuals->at(i);
 		val = dereferenceID(val, oldEnv, s);
 		s[allocAddress] = new StoreEntry(val);
-			
-		// TODO REMOVE
-		//store[allocAddress] = new StoreEntry(val);
-		// END TODO
-
 		e[((ArgumentNode*)formals->at(i))->getID()] = allocAddress;
 	}
 
@@ -129,10 +121,6 @@ State CESKInterpreter::stepFunctionCall(FunctionCallNode* fNode, Control c, map<
 	int returnK = current.getKontinuation();
 	Continuation* kont = new Continuation(returnControl, returnEnvironment, returnK, 0);
 	s[nextK] = new StoreEntry(kont);
-
-	// TODO REMOVE
-	//store[nextK] = new StoreEntry(kont);
-	// END TODO
 
 	k = nextK--;
 
@@ -169,10 +157,6 @@ State CESKInterpreter::stepAssignment(AssignmentNode* aNode, Control c, map<stri
 			ValueNode* val = (ValueNode*)actuals->at(i);
 			val = dereferenceID(val, oldEnv, s);
 			s[allocAddress] = new StoreEntry(val);
-			
-			// TODO REMOVE
-			//store[allocAddress] = new StoreEntry(val);
-			// END TODO
 
 			e[((ArgumentNode*)formals->at(i))->getID()] = allocAddress;
 		}
@@ -184,10 +168,6 @@ State CESKInterpreter::stepAssignment(AssignmentNode* aNode, Control c, map<stri
 
 		Continuation* kont = new Continuation(returnControl, returnEnvironment, returnK, returnEnvironment[aNode->getID()]);
 		s[nextK] = new StoreEntry(kont);
-
-		// TODO REMOVE
-		//store[nextK] = new StoreEntry(kont);
-		// END TODO
 
 		k = nextK--;
 	} 
@@ -259,8 +239,6 @@ State CESKInterpreter::stepReturn(ReturnNode* rNode, Control c, map<string, int>
 	// get next control from continuation
 	if (!current.getKontinuation()) throw "HALT";
 	StoreEntry* kontEntry = s[k];
-	// TODO REMOVE
-	//StoreEntry* kontEntry = store[k];
 	Continuation* oldKont = kontEntry->getKont();
 	c = oldKont->getControl();
 	k = oldKont->getAddress();
@@ -270,10 +248,6 @@ State CESKInterpreter::stepReturn(ReturnNode* rNode, Control c, map<string, int>
 		ValueNode* val = (ValueNode*)rNode->getValue();
 		val = dereferenceID(val, e, s);
 		s[returnAddress] = new StoreEntry(val);
-		
-		// TODO REMOVE
-		//tore[returnAddress] = new StoreEntry(val);
-		// END TODO
 	}
 	e = oldKont->getEnvironment();
 
@@ -282,6 +256,7 @@ State CESKInterpreter::stepReturn(ReturnNode* rNode, Control c, map<string, int>
 
 State CESKInterpreter::step()
 {
+	//cout << current.getControl().toString() << endl;
     //State(Control cp, map<string, int> ep, int kp) : c(cp), e(ep), k(kp) {}
     Control c = current.getControl();
     ASTNode* statement = c.getStatement();
@@ -357,8 +332,6 @@ ValueNode* CESKInterpreter::dereferenceID(ValueNode* n, map<string, int> e, map<
         }
         if (!storeaddr) { throw "Uninitialized Variable being referenced"; }
 		n = s[storeaddr]->getVal();
-		// TODO REMOVE
-		//n = store[storeaddr]->getVal();
     }
     return n;
 }
@@ -369,8 +342,6 @@ void CESKInterpreter::writeValue(string id, ValueNode* val, map<string, int>& lo
     if (localEnv.find(id) != localEnv.end()) storeaddr = localEnv[id];
     else storeaddr = globalEnv[id];
 	s[storeaddr] = new StoreEntry(val);
-	// TODO REMOVE
-    //store[storeaddr] = new StoreEntry(val);
 }
 
 ValueNode* CESKInterpreter::performUnop(UnopNode* n, map<string, int> e, map<int, StoreEntry*> s)

@@ -12,6 +12,8 @@ using namespace std;
 class CESKInterpreter
 {
 private:
+    friend class Model;
+
     map<int, StoreEntry*> store;
     map<string, int> globalEnv;
 	set<string> standard;

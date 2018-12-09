@@ -32,6 +32,11 @@ public:
         statementIndex = other->statementIndex;
     }
 
+	bool equals(Control other)
+	{
+		return ((statements == other.statements) && (statementIndex == other.statementIndex));
+	}
+
 	string toString()
 	{
 		return getStatement()->toString();
@@ -41,6 +46,11 @@ public:
     {
         return statements.top()->at(statementIndex.top());
     }
+
+	int getLineNumber()
+	{
+		return getStatement()->getLineNum();
+	}
 
     Control next()
     {

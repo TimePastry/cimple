@@ -1,4 +1,4 @@
-CPPS = ASTNodeDefines.cpp main.cpp CESKInterpreter.cpp PrettyPrintVisitor.cpp ListifyVisitor.cpp SymbolTableVisitor.cpp TypeCheckVisitor.cpp
+CPPS = ASTNodeDefines.cpp main.cpp CESKInterpreter.cpp CESKSearch.cpp PrettyPrintVisitor.cpp ListifyVisitor.cpp SymbolTableVisitor.cpp TypeCheckVisitor.cpp
 
 all: $(CPPS)
 	bison -d cimple.y

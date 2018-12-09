@@ -1,0 +1,22 @@
+// this is a test file to check for reachability
+// the property graph is as follows:
+// p1 is the only accept state
+// p0 -> p0 True
+// p0 -> p1 linenumber == 18
+// p1 -> p1 True
+
+int main()
+{
+    int i;
+    int condition;
+
+    i = select(0, 5);
+    condition = i == 3;
+    if (condition)
+    {
+        // we can sometimes reach this line
+        printint(i);
+    }
+    return 0;
+}
+

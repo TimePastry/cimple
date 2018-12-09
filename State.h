@@ -25,4 +25,8 @@ public:
     map<string, int> getEnvironment() { return e; }
     map<int, StoreEntry*> getStore() { return s; }
     int getKontinuation() { return k; }
+	bool equals(State* other)
+	{
+		return (c.equals(other->c) && (e == other->e) && (s == other->s) && (k == other->k));
+	}
 };

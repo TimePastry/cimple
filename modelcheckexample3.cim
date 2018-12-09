@@ -1,0 +1,134 @@
+// farmer and the river problem
+
+int validChoice(int choice, int wolf, int chicken, int seed, int farmer)
+{
+	int condition;
+			
+	condition = !choice;
+	if (condition)
+	{
+		// you can always choose to cross without a passenger
+		return 1;
+	}
+
+	if(farmer)
+	{
+		// chose the wolf
+		condition = choice == 1;
+		if (condition)
+		{
+			// can only take the wolf if he is on the same side as you
+			if (wolf)
+			{
+				return 1;
+			}
+			return 0;
+		}
+		// chose the chicken
+		condition = choice == 2;
+		if (condition)
+		{
+			// can only take the chicken if he is on the same side as you
+			if (chicken)
+			{
+				return 1;
+			}
+			return 0;
+		}
+		// chose the seed
+		condition = choice == 3;
+		if (condition)
+		{
+			// can only take the seed if it is on the same side as you
+			if (seed)
+			{
+				return 1;
+			}
+			return 0;
+		}
+		print("dummy statement so the stupid interpreter does not crash");
+	}
+	// chose the wolf
+	condition = choice == 1;
+	if (condition)
+	{
+		// can only take the wolf if he is on the same side as you
+		if (wolf)
+		{
+			return 0;
+		}
+		return 1;
+	}
+	// chose the chicken
+	condition = choice == 2;
+	if (condition)
+	{
+		// can only take the chicken if he is on the same side as you
+		if (chicken)
+		{
+			return 0;
+		}
+		return 1;
+	}
+	// chose the seed
+	condition = choice == 3;
+	if (condition)
+	{
+		// can only take the seed if it is on the same side as you
+		if (seed)
+		{
+			return 0;
+		}
+		return 1;
+	}
+	return 1;
+}
+
+int main()
+{
+	int condition;
+	int choice;
+	int wolf;
+	int chicken;
+	int seed;
+	int farmer;
+
+	wolf = 0;
+	chicken = 0;
+	seed = 0;
+	farmer = 0;
+
+	while(1)
+	{
+		//condition = 1;
+		//while (condition)
+		//{
+		//	choice = select(0, 4);
+		//	condition = validChoice(choice, wolf, chicken, seed, farmer);
+		//	condition = !condition;
+		//}
+		choice = select(0, 4);
+		
+		condition = choice == 1;
+		if (condition)
+		{
+			wolf = !wolf;
+		}
+
+		condition = choice == 2;
+		if (condition)
+		{
+			chicken = !chicken;
+		}
+
+		condition = choice == 3;
+		if (condition)
+		{
+			seed = !seed;
+		}
+
+		farmer = !farmer;
+	}
+
+	return 0;
+}

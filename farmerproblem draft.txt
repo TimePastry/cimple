@@ -1,0 +1,210 @@
+// farmer and the river problem
+
+global int wolf;
+global int chicken;
+global int seed;
+global int farmer;
+
+int validState()
+{
+	int condition;
+	
+	// if the farmer is on the other side
+	if (farmer)
+	{
+		condition = wolf || chicken;
+		condition = !condition;
+		if (condition)
+		{
+			// wolf eats chicken
+			return false;
+		}
+
+		condition = chicken || seed;
+		condition = !condition;
+		if (condition)
+		{
+			// chicken eats seed
+			return false;
+		}
+		// nothing happened while the farmer was on the other side
+		return true;
+	}
+	// farmer is on this side
+	condition = wolf && chicken;
+	if (condition)
+	{
+		// wolf eats chicken
+		return false;
+	}
+
+	condition = chicken && seed;
+	if (condition)
+	{
+		// chicken eats seed
+		return false;
+	}
+	// nothing happened while the farmer was on this side
+	return true;
+}
+
+int validChoice(int choice)
+{
+	int condition;
+			
+	condition = !choice;
+	if (condition)
+	{
+		// you can always choose to cross without a passenger
+		return true;
+	}
+
+	if(farmer)
+	{
+		// chose the wolf
+		condition = choice == 1;
+		if (condition)
+		{
+			// can only take the wolf if he is on the same side as you
+			if (wolf)
+			{
+				return true;
+			}
+			return false;
+		}
+		// chose the chicken
+		condition = choice == 2;
+		if (condition)
+		{
+			// can only take the chicken if he is on the same side as you
+			if (chicken)
+			{
+				return true;
+			}
+			return false;
+		}
+		// chose the seed
+		condition = choice == 3;
+		if (condition)
+		{
+			// can only take the seed if it is on the same side as you
+			if (seed)
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+	// chose the wolf
+	condition = choice == 1;
+	if (condition)
+	{
+		// can only take the wolf if he is on the same side as you
+		if (wolf)
+		{
+			return false;
+		}
+		return true;
+	}
+	// chose the chicken
+	condition = choice == 2;
+	if (condition)
+	{
+		// can only take the chicken if he is on the same side as you
+		if (chicken)
+		{
+			return false;
+		}
+		return true;
+	}
+	// chose the seed
+	condition = choice == 3;
+	if (condition)
+	{
+		// can only take the seed if it is on the same side as you
+		if (seed)
+		{
+			return false;
+		}
+		return true;
+	}
+}
+
+int finished()
+{
+	int condition;
+
+	condition = wolf && chicken;
+	condition = condition && seed;
+	return condition;
+}
+
+int main()
+{
+	int condition;
+	int choice;
+	int legalaction;
+
+	wolf = 0;
+	chicken = 0;
+	seed = 0;
+	farmer = 0;
+
+	condition = finished();
+
+	while(condition)
+	{
+		condition = 1;
+		while (condition)
+		{
+			choice = select(0, 4);
+			condition = validChoice(choice);
+			condition = !condition;
+		}
+		
+		condition = choice == 0;
+		if (condition)
+		{
+			farmer = !farmer;
+		}
+		else
+		{
+			condition = choice == 1;
+			if (condition)
+			{
+				farmer = !farmer;
+				wolf = !wolf;
+			}
+			else
+			{
+				condition = choice == 2;
+				if (condition)
+				{
+					farmer = !farmer;
+					chicken = !chicken;
+				}
+				else
+				{
+					condition = choice == 3;
+					if (condition)
+					{
+						farmer = !farmer;
+						seed = !seed;
+					}
+				}
+			}
+		}
+		
+		condition = validState();
+		condition = !validState();
+		if (condition)
+		{
+			// something ate something and we lose
+			return -1;
+		}
+
+		condition = finished();
+	}
+
+	return 0;
+}

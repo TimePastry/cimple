@@ -345,10 +345,10 @@ binoperator:
     ;
 
 unop:
-    unoperator literal              { 
-$$ = new UnopNode($2, $1); 
-$$->setLineNum(linenumber);
-}
+	unoperator value			{ 
+										$$ = new UnopNode($2, $1); 
+										$$->setLineNum(linenumber);
+									}
     ;
 
 unoperator:
@@ -360,7 +360,7 @@ whileloop:
          WHILE OPAREN value CPAREN OBRACE statements CBRACE
                                     {
                                         $$ = new WhileNode($3, $6);
-$$->setLineNum(linenumber);
+$$->setLineNum($3->getLineNum());
                                     }
     ;
 
@@ -368,12 +368,12 @@ ifstatement:
            IF OPAREN value CPAREN OBRACE statements CBRACE
                                     { 
 $$ = new IfNode($3, $6); 
-$$->setLineNum(linenumber);
+$$->setLineNum($3->getLineNum());
 }
     | IF OPAREN value CPAREN OBRACE statements CBRACE ELSE OBRACE statements CBRACE
                                     { 
 $$ = new IfNode($3, $6, new ElseNode($10)); 
-$$->setLineNum(linenumber);
+$$->setLineNum($3->getLineNum());
 }
     ;
 

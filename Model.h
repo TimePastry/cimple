@@ -44,9 +44,11 @@ public:
 		{
 			cout << "Trace found: " << endl;
 			cout << s << endl;
+			cout << "Total states used: " << states.size() << endl;
 			return;
 		}
 		cout << "The program cannot satisfy the given property" << endl;
+		cout << "Total states used: " << states.size() << endl;
 	}
 
 	void dfs1(ModelState* q)

@@ -159,6 +159,7 @@ int main(int argc, char** argv)
 			TypeCheckVisitor* tcv;
             
             cout << "Preparing for execution..." << endl;
+			cout << "This may take some time, please wait..." << endl;
             ListifyVisitor* lv = new ListifyVisitor();
             ((ProgramNode*)head)->accept(lv);
             SymbolTableVisitor* stv = new SymbolTableVisitor();

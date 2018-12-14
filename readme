@@ -37,4 +37,10 @@ When printing a string in interpretation, the quotes are not stripped off. e.g. 
 NEW
 
 Run "./exec modelcheckexample1.cim -mc -reach" to see a program that satisfies a property. Run the same with modelcheckexample2.cim instead to see one that does not satisfy.
--farmer is in progress, but something is wrong, potentially in the state matching definition.
+Run "./exec modelcheckexample3.cim -mc -farmer" for the farmer problem.
+The following procedure will allow you to add custom properties:
+1) Go to property.h
+2) In Property.h, add class functions of type bool(*)(State s, map<string, int> e). Several examples (constantTrue, winFarmer, etc.) are already present.
+3) Add a function to construct the property. Two examples (constructReachability and constructFarmer) are already present.
+4) Add a tag in main.cpp. Follow the pattern found at line 195 or on line 200
+5) Run the program with "./exec <filename> -m -<tag>" and sit back and watch the show

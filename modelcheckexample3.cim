@@ -92,22 +92,23 @@ int main()
 	int chicken;
 	int seed;
 	int farmer;
+	int counter;
 
 	wolf = 0;
 	chicken = 0;
 	seed = 0;
 	farmer = 0;
+	counter = 7;
 
-	while(1)
+	while(counter)
 	{
-		//condition = 1;
-		//while (condition)
-		//{
-		//	choice = select(0, 4);
-		//	condition = validChoice(choice, wolf, chicken, seed, farmer);
-		//	condition = !condition;
-		//}
 		choice = select(0, 4);
+		condition = validChoice(choice, wolf, chicken, seed, farmer);
+		condition = !condition;
+		if (condition)
+		{
+			choice = 0;
+		}
 		
 		condition = choice == 1;
 		if (condition)
@@ -128,6 +129,7 @@ int main()
 		}
 
 		farmer = !farmer;
+		counter = counter - 1;
 	}
 
 	return 0;

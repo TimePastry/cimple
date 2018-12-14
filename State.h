@@ -25,8 +25,60 @@ public:
     map<string, int> getEnvironment() { return e; }
     map<int, StoreEntry*> getStore() { return s; }
     int getKontinuation() { return k; }
+	bool storeMatch(State* first, State* second)
+	{
+		if (first->e != second->e) return false;
+		// we're going to assume global environments are already equal
+		// that doesn't work super nice but okay
+		for (auto entry : first->e)
+		{
+			if (first->s[entry.second] != second->s[entry.second]) return false;
+		}
+		// I don't think I need recursion because the continuation addresses being the same should imply that they are going back to the same spot
+		return true;
+	}
 	bool equals(State* other)
 	{
-		return (c.equals(other->c) && (e == other->e) && (s == other->s) && (k == other->k));
+		/*
+		string blank;
+
+		if ((storeMatch(this, other)))
+		{
+			cout << "s match:" << endl;
+			if (c.equals(other->c))
+			{
+				cout << "c match:" << endl;
+				if ((e == other->e))
+				{
+					cout << "e match:" << endl;
+					
+				}
+				else
+				{
+					cout << "e not match" << endl;
+				}
+			}
+			else
+			{
+				cout << "c not match" << endl;
+			}
+			cin >> blank;
+		}
+		else
+		{
+			cout << "s not match" << endl;
+		}
+		
+		return false;
+		*/
+/*
+		if (c.equals(other->c) && (e == other->e) && (storeMatch(this, other)) && (k == other->k))
+		{
+			cout << "MATCH" << endl;
+			return true;
+		}
+		return false;
+*/
+		return (c.equals(other->c) && (e == other->e) && (storeMatch(this, other)) && (k == other->k));
 	}
 };

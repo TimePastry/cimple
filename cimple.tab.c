@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "cimple.y" /* yacc.c:339  */
+#line 1 "flexbison/cimple.y" /* yacc.c:339  */
 
 #include <cstdio>
 #include <iostream>
@@ -110,7 +110,7 @@ ASTNode* head;
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 20 "cimple.y" /* yacc.c:355  */
+#line 20 "flexbison/cimple.y" /* yacc.c:355  */
 
     #include "ASTNodeDefines.h"
 
@@ -160,7 +160,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 25 "cimple.y" /* yacc.c:355  */
+#line 25 "flexbison/cimple.y" /* yacc.c:355  */
 
     int ival;
     char cval;
@@ -1341,13 +1341,13 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 73 "cimple.y" /* yacc.c:1646  */
+#line 73 "flexbison/cimple.y" /* yacc.c:1646  */
     { head = new ProgramNode((yyvsp[-1].nval), (yyvsp[0].nval)); }
 #line 1347 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 78 "cimple.y" /* yacc.c:1646  */
+#line 78 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1363,13 +1363,13 @@ yyreduce:
     break;
 
   case 4:
-#line 89 "cimple.y" /* yacc.c:1646  */
+#line 89 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1369 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 94 "cimple.y" /* yacc.c:1646  */
+#line 94 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string type = (yyvsp[-2].sval);
                                         string id = (yyvsp[-1].idval);
@@ -1380,25 +1380,25 @@ yyreduce:
     break;
 
   case 6:
-#line 103 "cimple.y" /* yacc.c:1646  */
+#line 103 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"int"; }
 #line 1386 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 104 "cimple.y" /* yacc.c:1646  */
+#line 104 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"char"; }
 #line 1392 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 105 "cimple.y" /* yacc.c:1646  */
+#line 105 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.sval) = (char *)"string"; }
 #line 1398 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 110 "cimple.y" /* yacc.c:1646  */
+#line 110 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1414,19 +1414,19 @@ yyreduce:
     break;
 
   case 10:
-#line 121 "cimple.y" /* yacc.c:1646  */
+#line 121 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1420 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 125 "cimple.y" /* yacc.c:1646  */
+#line 125 "flexbison/cimple.y" /* yacc.c:1646  */
     { num = linenumber; }
 #line 1426 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 126 "cimple.y" /* yacc.c:1646  */
+#line 126 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string type = (yyvsp[-8].sval);
                                         string id = (yyvsp[-6].idval);
@@ -1437,19 +1437,19 @@ yyreduce:
     break;
 
   case 13:
-#line 135 "cimple.y" /* yacc.c:1646  */
+#line 135 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); /*Head of the argument list*/ }
 #line 1443 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 136 "cimple.y" /* yacc.c:1646  */
+#line 136 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; /*There are no arguments*/ }
 #line 1449 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 141 "cimple.y" /* yacc.c:1646  */
+#line 141 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ((ArgumentNode*)(yyvsp[-1].nval))->append((yyvsp[0].nval));
                                         (yyval.nval) = (yyvsp[-1].nval);
@@ -1458,19 +1458,19 @@ yyreduce:
     break;
 
   case 16:
-#line 148 "cimple.y" /* yacc.c:1646  */
+#line 148 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1464 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 149 "cimple.y" /* yacc.c:1646  */
+#line 149 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1470 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 154 "cimple.y" /* yacc.c:1646  */
+#line 154 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string type = (yyvsp[-1].sval);
                                         string id = (yyvsp[0].idval);
@@ -1481,7 +1481,7 @@ yyreduce:
     break;
 
   case 19:
-#line 163 "cimple.y" /* yacc.c:1646  */
+#line 163 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
                                         (yyval.nval) = new FunctionBodyNode((yyvsp[-1].nval), (yyvsp[0].nval));
                                         (yyval.nval)->setLineNum(num);
@@ -1490,7 +1490,7 @@ yyreduce:
     break;
 
   case 20:
-#line 171 "cimple.y" /* yacc.c:1646  */
+#line 171 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if (cur)
@@ -1506,13 +1506,13 @@ yyreduce:
     break;
 
   case 21:
-#line 182 "cimple.y" /* yacc.c:1646  */
+#line 182 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1512 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 187 "cimple.y" /* yacc.c:1646  */
+#line 187 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string type = (yyvsp[-2].sval);
                                         string id = (yyvsp[-1].idval);
@@ -1523,7 +1523,7 @@ yyreduce:
     break;
 
   case 23:
-#line 196 "cimple.y" /* yacc.c:1646  */
+#line 196 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ASTNode* cur = (yyvsp[-1].nval);
                                         if ((yyvsp[-1].nval))
@@ -1539,43 +1539,43 @@ yyreduce:
     break;
 
   case 24:
-#line 207 "cimple.y" /* yacc.c:1646  */
+#line 207 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1545 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 211 "cimple.y" /* yacc.c:1646  */
+#line 211 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[-1].nval); }
 #line 1551 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 212 "cimple.y" /* yacc.c:1646  */
+#line 212 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[-1].nval); }
 #line 1557 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 213 "cimple.y" /* yacc.c:1646  */
+#line 213 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1563 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 214 "cimple.y" /* yacc.c:1646  */
+#line 214 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1569 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 215 "cimple.y" /* yacc.c:1646  */
+#line 215 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1575 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 220 "cimple.y" /* yacc.c:1646  */
+#line 220 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string id = (yyvsp[-3].idval);
                                         ASTNode* vlist = (yyvsp[-1].nval);
@@ -1586,19 +1586,19 @@ yyreduce:
     break;
 
   case 31:
-#line 229 "cimple.y" /* yacc.c:1646  */
+#line 229 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1592 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 230 "cimple.y" /* yacc.c:1646  */
+#line 230 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1598 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 235 "cimple.y" /* yacc.c:1646  */
+#line 235 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         ((ValueListNode*)(yyvsp[-1].nval))->append((yyvsp[0].nval));
                                         (yyval.nval) = (yyvsp[-1].nval);
@@ -1607,7 +1607,7 @@ yyreduce:
     break;
 
   case 34:
-#line 242 "cimple.y" /* yacc.c:1646  */
+#line 242 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
                                         (yyval.nval) = new ValueListNode("ID", (yyvsp[0].idval));
                                         (yyval.nval)->setLineNum(linenumber);
@@ -1616,7 +1616,7 @@ yyreduce:
     break;
 
   case 35:
-#line 246 "cimple.y" /* yacc.c:1646  */
+#line 246 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
                                         (yyval.nval) = new ValueListNode((yyvsp[0].cval));
                                         (yyval.nval)->setLineNum(linenumber); 
@@ -1625,7 +1625,7 @@ yyreduce:
     break;
 
   case 36:
-#line 250 "cimple.y" /* yacc.c:1646  */
+#line 250 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueListNode("String", (yyvsp[0].sval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1634,7 +1634,7 @@ yyreduce:
     break;
 
   case 37:
-#line 254 "cimple.y" /* yacc.c:1646  */
+#line 254 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueListNode((yyvsp[0].ival)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1643,19 +1643,19 @@ yyreduce:
     break;
 
   case 38:
-#line 261 "cimple.y" /* yacc.c:1646  */
+#line 261 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1649 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 262 "cimple.y" /* yacc.c:1646  */
+#line 262 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = NULL; }
 #line 1655 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 267 "cimple.y" /* yacc.c:1646  */
+#line 267 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         string id = (yyvsp[-2].idval);
                                         (yyval.nval) = new AssignmentNode(id, (yyvsp[0].nval));
@@ -1665,31 +1665,31 @@ yyreduce:
     break;
 
   case 41:
-#line 275 "cimple.y" /* yacc.c:1646  */
+#line 275 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1671 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 276 "cimple.y" /* yacc.c:1646  */
+#line 276 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1677 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 277 "cimple.y" /* yacc.c:1646  */
+#line 277 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1683 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 278 "cimple.y" /* yacc.c:1646  */
+#line 278 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1689 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 282 "cimple.y" /* yacc.c:1646  */
+#line 282 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueTermNode("ID", (yyvsp[0].idval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1698,7 +1698,7 @@ yyreduce:
     break;
 
   case 46:
-#line 286 "cimple.y" /* yacc.c:1646  */
+#line 286 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueTermNode((yyvsp[0].cval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1707,7 +1707,7 @@ yyreduce:
     break;
 
   case 47:
-#line 290 "cimple.y" /* yacc.c:1646  */
+#line 290 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueTermNode("String", (yyvsp[0].sval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1716,7 +1716,7 @@ yyreduce:
     break;
 
   case 48:
-#line 294 "cimple.y" /* yacc.c:1646  */
+#line 294 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueTermNode((yyvsp[0].ival)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1725,7 +1725,7 @@ yyreduce:
     break;
 
   case 49:
-#line 301 "cimple.y" /* yacc.c:1646  */
+#line 301 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), (yyvsp[-1].ival)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1734,7 +1734,7 @@ yyreduce:
     break;
 
   case 50:
-#line 305 "cimple.y" /* yacc.c:1646  */
+#line 305 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new BinopNode((yyvsp[-2].nval), (yyvsp[0].nval), 10); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1743,7 +1743,7 @@ yyreduce:
     break;
 
   case 51:
-#line 312 "cimple.y" /* yacc.c:1646  */
+#line 312 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueNode("ID", (yyvsp[0].idval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1752,13 +1752,13 @@ yyreduce:
     break;
 
   case 52:
-#line 316 "cimple.y" /* yacc.c:1646  */
+#line 316 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.nval) = (yyvsp[0].nval); }
 #line 1758 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 320 "cimple.y" /* yacc.c:1646  */
+#line 320 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueNode((yyvsp[0].cval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1767,7 +1767,7 @@ yyreduce:
     break;
 
   case 54:
-#line 324 "cimple.y" /* yacc.c:1646  */
+#line 324 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueNode("String", (yyvsp[0].sval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1776,7 +1776,7 @@ yyreduce:
     break;
 
   case 55:
-#line 328 "cimple.y" /* yacc.c:1646  */
+#line 328 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ValueNode((yyvsp[0].ival)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -1785,67 +1785,67 @@ yyreduce:
     break;
 
   case 56:
-#line 335 "cimple.y" /* yacc.c:1646  */
+#line 335 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 0; }
 #line 1791 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 336 "cimple.y" /* yacc.c:1646  */
+#line 336 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 1; }
 #line 1797 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 337 "cimple.y" /* yacc.c:1646  */
+#line 337 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 2; }
 #line 1803 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 338 "cimple.y" /* yacc.c:1646  */
+#line 338 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 3; }
 #line 1809 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 339 "cimple.y" /* yacc.c:1646  */
+#line 339 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 4; }
 #line 1815 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 340 "cimple.y" /* yacc.c:1646  */
+#line 340 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 5; }
 #line 1821 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 341 "cimple.y" /* yacc.c:1646  */
+#line 341 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 6; }
 #line 1827 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 342 "cimple.y" /* yacc.c:1646  */
+#line 342 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 7; }
 #line 1833 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 343 "cimple.y" /* yacc.c:1646  */
+#line 343 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 8; }
 #line 1839 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 344 "cimple.y" /* yacc.c:1646  */
+#line 344 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 9; }
 #line 1845 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 348 "cimple.y" /* yacc.c:1646  */
+#line 348 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 										(yyval.nval) = new UnopNode((yyvsp[0].nval), (yyvsp[-1].ival)); 
 										(yyval.nval)->setLineNum(linenumber);
@@ -1854,19 +1854,19 @@ yyreduce:
     break;
 
   case 67:
-#line 355 "cimple.y" /* yacc.c:1646  */
+#line 355 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 1; }
 #line 1860 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 356 "cimple.y" /* yacc.c:1646  */
+#line 356 "flexbison/cimple.y" /* yacc.c:1646  */
     { (yyval.ival) = 11; }
 #line 1866 "cimple.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 361 "cimple.y" /* yacc.c:1646  */
+#line 361 "flexbison/cimple.y" /* yacc.c:1646  */
     {
                                         (yyval.nval) = new WhileNode((yyvsp[-4].nval), (yyvsp[-1].nval));
 (yyval.nval)->setLineNum((yyvsp[-4].nval)->getLineNum());
@@ -1875,7 +1875,7 @@ yyreduce:
     break;
 
   case 70:
-#line 369 "cimple.y" /* yacc.c:1646  */
+#line 369 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new IfNode((yyvsp[-4].nval), (yyvsp[-1].nval)); 
 (yyval.nval)->setLineNum((yyvsp[-4].nval)->getLineNum());
@@ -1884,7 +1884,7 @@ yyreduce:
     break;
 
   case 71:
-#line 374 "cimple.y" /* yacc.c:1646  */
+#line 374 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new IfNode((yyvsp[-8].nval), (yyvsp[-5].nval), new ElseNode((yyvsp[-1].nval))); 
 (yyval.nval)->setLineNum((yyvsp[-8].nval)->getLineNum());
@@ -1893,7 +1893,7 @@ yyreduce:
     break;
 
   case 72:
-#line 381 "cimple.y" /* yacc.c:1646  */
+#line 381 "flexbison/cimple.y" /* yacc.c:1646  */
     { 
 (yyval.nval) = new ReturnNode((yyvsp[-1].nval)); 
 (yyval.nval)->setLineNum(linenumber);
@@ -2130,7 +2130,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 387 "cimple.y" /* yacc.c:1906  */
+#line 387 "flexbison/cimple.y" /* yacc.c:1906  */
 
 
 ASTNode* parse(char* filename){

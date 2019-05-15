@@ -13,21 +13,23 @@ Currently supported tags are:
 -list               The Listify visitor, which flattens the AST so that lists of nodes are contained in a single list node
 -st                 The Symbol Table visitor, which generates and prints a symbol table
 -tc                 The Type Check visitor, which verifies the types are correct
-                        This is effectively -list -st -tc, as it will flatten the AST and generate a symbol table before performing the type check
+                        This is effectively -list -st -tc, as it will flatten the AST and 
+                        generate a symbol table before performing the type check
 -v                  When used immediately after -tc, this tag will print out a verbose report of the type check
 -cesk               Performs -tc, and then interprets the file given
 -mc                 Checks model with property given as the next tag. Only support property currently is "-reach"
 
-There is a file named "cample" that can be used to test the execution of "exec".
+There is a file named "cample" that can be used to test the execution of "cim".
 All files included for testing purposes have the extension ".cim"
 
 ValidType.cim, InvalidType.cim, and InvalidType2.cim can all be used to verify the correctness of the Type Checker.
 
-interptest1.cim, interptest2.cim, and interptest3.cim all verify correcness of te interpreter. Further details about what they test can be found in comments for the given files.
+interptest1.cim, interptest2.cim, and interptest3.cim all verify correcness of te interpreter. 
+Further details about what they test can be found in comments for the given files.
 
 Example run:
 
-./exec cample.cim -list -pp
+./cim cample.cim -list -pp
 
 If you have questions, you can email me at timepastry@gmail.com
 

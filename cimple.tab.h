@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 20 "cimple.y" /* yacc.c:1909  */
+#line 20 "flexbison/cimple.y" /* yacc.c:1909  */
 
     #include "ASTNodeDefines.h"
 
@@ -90,7 +90,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 25 "cimple.y" /* yacc.c:1909  */
+#line 25 "flexbison/cimple.y" /* yacc.c:1909  */
 
     int ival;
     char cval;

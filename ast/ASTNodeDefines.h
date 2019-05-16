@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "ASTNode.h"
 using namespace std;
 
 enum vtypes { INTV, STRINGV, CHARV, IDV, INTF, STRINGF, CHARF };
@@ -13,16 +14,7 @@ string opToString(operators o);
 string vtypesToString(vtypes v);
 vtypes stringToVtypes(string s, bool isFunc = false);
 
-class ASTNode
-{
-private:
-	int linenum;
-public:
-	void setLineNum(int num) { linenum = num; }
-	int getLineNum() { return linenum; }
-    virtual string toString() = 0;
-    virtual void accept(Visitor* v) = 0;
-};
+class ASTNode;
 
 class ListNode : public ASTNode
 {
@@ -194,100 +186,12 @@ public:
     virtual void accept(Visitor* v);
 };
 
-class AssignmentNode : public StatementNode
-{
-private:
-    string id;
-    ASTNode* term;
-public:
-    AssignmentNode(string label, ASTNode* t) : id(label), term(t) {}
-    string getID() { return id; }
-    ASTNode* getTerm() { return term; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-class BinopNode : public ASTNode
-{
-private:
-    ASTNode* lhs;
-    ASTNode* rhs;
-    operators op;
-public:
-    BinopNode(ASTNode* l, ASTNode* r, int opindex) : lhs(l), rhs(r), op(operators(opindex)) {}
-    operators getOp() { return op; }
-    ASTNode* getLeft() { return lhs; }
-    ASTNode* getRight() { return rhs; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-
-class UnopNode : public ASTNode
-{
-private:
-    ASTNode* rhs;
-    operators op;
-public:
-    UnopNode(ASTNode* r, int opindex) : rhs(r), op(operators(opindex)) {}
-    ASTNode* getValue() { return rhs; }
-    operators getOp() { return op; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-class WhileNode : public StatementNode
-{
-private:
-    ASTNode* condition;
-    ASTNode* body;
-public:
-    WhileNode(ASTNode* c, ASTNode* b) : condition(c), body(b) {}
-    ASTNode* getCondition() { return condition; }
-    void setBody(ASTNode* b) { body = b; }
-    ASTNode* getBody() { return body; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-class IfNode : public StatementNode
-{
-private:
-    ASTNode* condition;
-    ASTNode* body;
-    ASTNode* elseBody;
-public:
-    IfNode(ASTNode* c, ASTNode* b, ASTNode* e = NULL) : condition(c), body(b), elseBody(e) {}
-    ASTNode* getCondition() { return condition; }
-    void setBody(ASTNode* b) { body = b; }
-    ASTNode* getBody() { return body; }
-    void setElse(ASTNode* e) { elseBody = e; }
-    ASTNode* getElse() { return elseBody; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-class ElseNode : public StatementNode
-{
-private:
-    ASTNode* body;
-public:
-    ElseNode(ASTNode* b) : body(b) {}
-    void setBody(ASTNode* b) { body = b; }
-    ASTNode* getBody() { return body; }
-    void accept(Visitor* v);
-    string toString();
-};
-
-class ReturnNode : public StatementNode
-{
-private:
-    ASTNode* value;
-public:
-    ReturnNode(ASTNode* v) : value(v) {}
-    ASTNode* getValue() { return value; }
-    void accept(Visitor* v);
-    string toString();
-};
+class AssignmentNode;
+class BinopNode;
+class UnopNode;
+class WhileNode;
+class IfNode;
+class ElseNode;
+class ReturnNode;
 
 int listLength(ASTNode* n);

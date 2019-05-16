@@ -1,5 +1,5 @@
 #include "ASTNodeDefines.h"
-#include "Visitor.h"
+#include "../Visitor.h"
 #include <string>
 #include <iostream>
 #include <sstream>

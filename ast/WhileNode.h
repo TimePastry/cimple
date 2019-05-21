@@ -15,4 +15,5 @@ public:
     void accept(Visitor* v);
     string toString();
 };
+
 #endif
